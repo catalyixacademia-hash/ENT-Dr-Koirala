@@ -1,9 +1,12 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
 import AppLogo from '@/components/ui/AppLogo';
 import Icon from '@/components/ui/AppIcon';
+import { useAuth } from '@/contexts/AuthContext';
+import { ADMIN_EMAIL, ADMIN_FULL_NAME } from '@/lib/admin-config';
 
 interface LoginFormData {
   email: string;
@@ -11,34 +14,37 @@ interface LoginFormData {
   rememberMe: boolean;
 }
 
-const DEMO_CREDENTIAL = {
-  email: 'dr.krishna@entportal.np',
-  password: 'ENTAdmin@2026',
-};
-
-export default function LoginForm() {
+function LoginFormInner() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const { signIn } = useAuth();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get('redirect') || '/admin-dashboard-home';
 
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm<LoginFormData>();
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<LoginFormData>({
+    defaultValues: { email: ADMIN_EMAIL },
+  });
 
   const onSubmit = async (data: LoginFormData) => {
     setError('');
     setLoading(true);
-    // BACKEND INTEGRATION: POST /api/auth/login with email + password
-    await new Promise((r) => setTimeout(r, 1400));
-    if (data.email === DEMO_CREDENTIAL.email && data.password === DEMO_CREDENTIAL.password) {
-      window.location.href = '/admin-dashboard-home';
-    } else {
-      setError('Invalid credentials — use the demo account below to sign in');
+    try {
+      await signIn(data.email.trim(), data.password);
+      router.push(redirectTo);
+      router.refresh();
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error ? err.message : 'Invalid email or password. Please try again.';
+      setError(message);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   const autofill = () => {
-    setValue('email', DEMO_CREDENTIAL.email);
-    setValue('password', DEMO_CREDENTIAL.password);
+    setValue('email', ADMIN_EMAIL);
   };
 
   return (
@@ -117,7 +123,7 @@ export default function LoginForm() {
             <span className="font-bold text-foreground text-lg">ENTPortal</span>
           </div>
 
-          <h2 className="text-2xl font-extrabold text-foreground mb-2">Welcome back, Doctor</h2>
+          <h2 className="text-2xl font-extrabold text-foreground mb-2">Welcome back, {ADMIN_FULL_NAME}</h2>
           <p className="text-muted-foreground text-sm mb-8">Sign in to access your admin dashboard</p>
 
           {error && (
@@ -138,7 +144,7 @@ export default function LoginForm() {
                     pattern: { value: /^\S+@\S+\.\S+$/, message: 'Enter a valid email' },
                   })}
                   type="email"
-                  placeholder="dr.krishna@entportal.np"
+                  placeholder={ADMIN_EMAIL}
                   className="input-field pl-10"
                 />
               </div>
@@ -204,7 +210,7 @@ export default function LoginForm() {
           {/* Demo Credentials Box */}
           <div className="mt-6 p-4 rounded-2xl bg-accent/5 border border-accent/20">
             <div className="flex items-center justify-between mb-3">
-              <p className="text-xs font-bold text-foreground uppercase tracking-wider">Demo Credentials</p>
+              <p className="text-xs font-bold text-foreground uppercase tracking-wider">Admin Credentials</p>
               <button
                 onClick={autofill}
                 className="text-xs font-semibold text-accent hover:text-primary transition-colors flex items-center gap-1"
@@ -217,13 +223,13 @@ export default function LoginForm() {
               <div className="flex items-center justify-between bg-white rounded-lg px-3 py-2 border">
                 <div>
                   <p className="text-xs text-muted-foreground">Email</p>
-                  <p className="text-xs font-semibold text-foreground font-mono">{DEMO_CREDENTIAL.email}</p>
+                  <p className="text-xs font-semibold text-foreground font-mono">{ADMIN_EMAIL}</p>
                 </div>
               </div>
               <div className="flex items-center justify-between bg-white rounded-lg px-3 py-2 border">
                 <div>
                   <p className="text-xs text-muted-foreground">Password</p>
-                  <p className="text-xs font-semibold text-foreground font-mono">{DEMO_CREDENTIAL.password}</p>
+                  <p className="text-xs text-muted-foreground font-mono">Use ADMIN_PASSWORD from .env</p>
                 </div>
               </div>
             </div>
@@ -238,5 +244,13 @@ export default function LoginForm() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function LoginForm() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-muted-foreground">Loading...</div>}>
+      <LoginFormInner />
+    </Suspense>
   );
 }

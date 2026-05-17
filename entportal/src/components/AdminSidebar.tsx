@@ -1,9 +1,12 @@
 'use client';
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import AppLogo from '@/components/ui/AppLogo';
 import Icon from '@/components/ui/AppIcon';
 import { useAdminLanguage } from '@/contexts/AdminLanguageContext';
+import { useAuth } from '@/contexts/AuthContext';
+import { ADMIN_FULL_NAME } from '@/lib/admin-config';
 import { getTranslations } from '@/lib/i18n';
 
 interface NavItem {
@@ -32,8 +35,22 @@ interface AdminSidebarProps {
 
 export default function AdminSidebar({ currentPath, onClose }: AdminSidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
+  const [signingOut, setSigningOut] = useState(false);
   const { language } = useAdminLanguage();
+  const { signOut } = useAuth();
+  const router = useRouter();
   const t = getTranslations(language);
+
+  const handleSignOut = async () => {
+    setSigningOut(true);
+    try {
+      await signOut();
+      router.push('/sign-up-login-screen');
+      router.refresh();
+    } finally {
+      setSigningOut(false);
+    }
+  };
 
   return (
     <aside
@@ -155,9 +172,21 @@ export default function AdminSidebar({ currentPath, onClose }: AdminSidebarProps
           </div>
           {!collapsed && (
             <div className="flex-1 min-w-0">
-              <p className="text-xs font-semibold text-white truncate">Dr. Krishna Koirala</p>
+              <p className="text-xs font-semibold text-white truncate">{ADMIN_FULL_NAME}</p>
               <p className="text-xs text-slate-400 truncate">{t.admin_doctor_title}</p>
             </div>
+          )}
+          {!collapsed && (
+            <button
+              type="button"
+              onClick={handleSignOut}
+              disabled={signingOut}
+              className="p-2 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
+              title="Sign out"
+              aria-label="Sign out"
+            >
+              <Icon name="ArrowRightOnRectangleIcon" size={18} />
+            </button>
           )}
         </div>
       </div>

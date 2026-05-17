@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import AppLogo from '@/components/ui/AppLogo';
 import Icon from '@/components/ui/AppIcon';
 import { type Language, SUPPORTED_LANGUAGES } from '@/lib/i18n';
@@ -132,6 +133,12 @@ export default function PublicNavbar({ language, onLanguageChange }: PublicNavba
               <a href="#booking" className="btn-primary text-sm px-5 py-2.5">
                 {bookLabel}
               </a>
+              <Link
+                href="/sign-up-login-screen"
+                className={`text-xs font-semibold hover:underline ${scrolled ? 'text-muted-foreground' : 'text-white/80'}`}
+              >
+                Admin
+              </Link>
             </div>
 
             {/* Mobile Right: Language + Hamburger */}
@@ -194,6 +201,14 @@ export default function PublicNavbar({ language, onLanguageChange }: PublicNavba
                 <a href="#booking" onClick={() => setMenuOpen(false)} className="btn-primary w-full justify-center">
                   {bookLabel}
                 </a>
+                <Link
+                  href="/sign-up-login-screen"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center gap-2 px-4 py-3 text-sm font-semibold text-muted-foreground hover:bg-muted rounded-lg transition-colors"
+                >
+                  <Icon name="LockClosedIcon" size={16} />
+                  Admin Login
+                </Link>
               </div>
             </div>
           </div>

@@ -1,0 +1,12 @@
+{
+  "name": "ent-dr-koirala",
+  "private": true,
+  "workspaces": [
+    "entportal"
+  ],
+  "scripts": {
+    "build": "npm run build -w entportal",
+    "dev": "npm run dev -w entportal",
+    "start": "npm run serve -w entportal"
+  }
+}

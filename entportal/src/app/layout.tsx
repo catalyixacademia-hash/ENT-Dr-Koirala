@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Metadata, Viewport } from 'next';
 import { Plus_Jakarta_Sans } from 'next/font/google';
+import Providers from '@/components/Providers';
 import '../styles/tailwind.css';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -31,8 +32,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={plusJakartaSans.variable}>
-      <body className={plusJakartaSans.className}>{children}
-</body>
+      <body className={plusJakartaSans.className}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

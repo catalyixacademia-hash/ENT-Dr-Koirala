@@ -195,7 +195,7 @@ export default function AppointmentTable({ appointments, selectedIds, onSelectId
                     </div>
                   </td>
                   <td className="px-4 py-3">
-                    <div className="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="flex items-center justify-end gap-1">
                       <button
                         onClick={() => onViewDetail(appt)}
                         title="View appointment details"

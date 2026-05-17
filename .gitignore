@@ -1,6 +1,9 @@
 # Cursor / IDE
 .cursor/
 
+# Root workspace dependencies
+node_modules/
+
 # Dependencies & build (entportal)
 entportal/node_modules/
 entportal/.next/
