@@ -1,0 +1,19 @@
+# Cursor / IDE
+.cursor/
+
+# Dependencies & build (entportal)
+entportal/node_modules/
+entportal/.next/
+entportal/out/
+entportal/build/
+entportal/.vercel/
+
+# Environment secrets — never commit
+.env
+.env.*
+!.env.example
+
+# Logs & OS
+*.log
+.DS_Store
+Thumbs.db
