@@ -7,9 +7,6 @@ const CLINIC_NAME = 'Dr. Krishna Koirala ENT Care';
 
 function getResendClient(): Resend | null {
   const apiKey = process.env.RESEND_API_KEY;
-  // #region agent log
-  fetch('http://127.0.0.1:7497/ingest/984c2024-2c07-43de-84a3-0c9e2e2d3469',{method:'POST',headers:{'Content-Type':'application/json','X-Debug-Session-Id':'8925f4'},body:JSON.stringify({sessionId:'8925f4',location:'send-booking-email/route.ts:getResendClient',message:'Resend client lookup',data:{hasApiKey:Boolean(apiKey)},timestamp:Date.now(),hypothesisId:'A'})}).catch(()=>{});
-  // #endregion
   if (!apiKey) return null;
   return new Resend(apiKey);
 }

@@ -5,7 +5,7 @@
     "entportal"
   ],
   "scripts": {
-    "build": "npm run build -w entportal",
+    "build": "npm run build -w entportal && node scripts/sync-vercel-next-output.mjs",
     "dev": "npm run dev -w entportal",
     "start": "npm run serve -w entportal"
   }
