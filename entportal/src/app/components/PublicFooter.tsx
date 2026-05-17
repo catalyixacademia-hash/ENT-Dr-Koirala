@@ -26,16 +26,16 @@ export default function PublicFooter({ language }: PublicFooterProps) {
             <div className="flex items-center gap-2 mb-4">
               <AppLogo size={36} />
               <div>
-                <p className="font-bold text-white text-sm">Dr. Krishna Koirala</p>
-                <p className="text-xs text-slate-400">ENT & Head-Neck Surgeon</p>
+                <p className="font-bold text-white text-sm">{t.footer_doctor_name}</p>
+                <p className="text-xs text-slate-400">{t.footer_doctor_title}</p>
               </div>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed mb-4">{t.footer_tagline}</p>
             <div className="flex gap-3">
               {[
-                { icon: 'GlobeAltIcon', href: 'https://www.facebook.com/drkrishnakoirala', label: 'Facebook' },
-                { icon: 'PlayCircleIcon', href: 'https://www.tiktok.com/@dr_krishna_koirala_ent', label: 'TikTok' },
-                { icon: 'PhoneIcon', href: 'tel:061553150', label: 'Phone' },
+                { icon: 'GlobeAltIcon', href: 'https://www.facebook.com/drkrishnakoirala', label: t.footer_aria_facebook },
+                { icon: 'PlayCircleIcon', href: 'https://www.tiktok.com/@dr_krishna_koirala_ent', label: t.footer_aria_tiktok },
+                { icon: 'PhoneIcon', href: 'tel:061553150', label: t.footer_aria_phone },
               ].map((s) => (
                 <a
                   key={s.label}
@@ -70,9 +70,9 @@ export default function PublicFooter({ language }: PublicFooterProps) {
             <p className="font-bold text-white text-sm mb-4 uppercase tracking-wider">{t.footer_contact}</p>
             <div className="space-y-3">
               {[
-                { icon: 'PhoneIcon', text: '061-553150 | 985-6034347' },
-                { icon: 'MapPinIcon', text: 'Nayabazar ENT Care Center, Pokhara, Nepal' },
-                { icon: 'ClockIcon', text: 'Mon–Sat: 9AM–1PM & 5PM–8PM' },
+                { icon: 'PhoneIcon', text: t.footer_phone },
+                { icon: 'MapPinIcon', text: t.footer_address },
+                { icon: 'ClockIcon', text: t.footer_hours },
               ].map((item, i) => (
                 <div key={`contact-${i}`} className="flex items-start gap-2.5">
                   <Icon name={item.icon as Parameters<typeof Icon>[0]['name']} size={14} className="text-slate-400 flex-shrink-0 mt-0.5" />

@@ -327,6 +327,15 @@ export const extendedEn = {
   patient_ph_city: 'Pokhara',
   patient_ph_diagnosis: 'Sinusitis, Nasal Polyps, Tinnitus',
   patient_ph_allergies: 'Penicillin, Dust Mites, Pollen',
+  footer_doctor_name: 'Dr. Krishna Koirala',
+  footer_doctor_title: 'ENT & Head-Neck Surgeon',
+  footer_phone: '061-553150 | 985-6034347',
+  footer_address: 'Nayabazar ENT Care Center, Pokhara, Nepal',
+  footer_hours: 'Mon–Sat: 9AM–1PM & 5PM–8PM',
+  footer_aria_facebook: 'Facebook',
+  footer_aria_tiktok: 'TikTok',
+  footer_aria_phone: 'Phone',
+  brand_name: 'ENTPortal',
 } as const;
 
 export const extendedNe: Record<keyof typeof extendedEn, string> = {
@@ -434,7 +443,7 @@ export const extendedNe: Record<keyof typeof extendedEn, string> = {
   patient_last_visit_label: 'अन्तिम भ्रमण',
   patient_city_label_short: 'शहर',
   login_error_invalid: 'अमान्य इमेल वा पासवर्ड। फेरि प्रयास गर्नुहोस्।',
-  login_brand_name: 'ENTPortal',
+  login_brand_name: 'ईएनटी पोर्टल',
   login_brand_subtitle: 'प्रशासन प्यानल',
   login_badge_secure: 'सुरक्षित डाक्टर ड्यासबोर्ड',
   login_headline_1: 'आफ्नो अभ्यास',
@@ -655,4 +664,13 @@ export const extendedNe: Record<keyof typeof extendedEn, string> = {
   patient_ph_city: 'पोखरा',
   patient_ph_diagnosis: 'साइनसाइटिस, नाकको पोलिप, टिनिटस',
   patient_ph_allergies: 'पेनिसिलिन, धुलो कृमि, पराग',
+  footer_doctor_name: 'डा. कृष्ण कोइराला',
+  footer_doctor_title: 'ENT र टाउको-घाँटी शल्यचिकित्सक',
+  footer_phone: '०६१-५५३१५० | ९८५-६०३४३४७',
+  footer_address: 'नयाबजार ENT केयर सेन्टर, पोखरा, नेपाल',
+  footer_hours: 'सोम–शनि: बिहान ९–१ र साँझ ५–८',
+  footer_aria_facebook: 'फेसबुक',
+  footer_aria_tiktok: 'टिकटक',
+  footer_aria_phone: 'फोन',
+  brand_name: 'ईएनटी पोर्टल',
 };

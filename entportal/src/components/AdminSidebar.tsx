@@ -65,7 +65,7 @@ export default function AdminSidebar({ currentPath, onClose }: AdminSidebarProps
         {!collapsed && (
           <div className="flex items-center gap-2">
             <AppLogo size={32} />
-            <span className="font-bold text-white text-sm tracking-tight">ENTPortal</span>
+            <span className="font-bold text-white text-sm tracking-tight">{t.brand_name}</span>
           </div>
         )}
         {collapsed && (
