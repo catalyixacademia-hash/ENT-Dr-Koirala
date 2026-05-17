@@ -28,7 +28,7 @@ export default function AdminTopbar({ onMenuClick }: AdminTopbarProps) {
           <button
             onClick={onMenuClick}
             className="p-2 rounded-lg hover:bg-muted transition-colors lg:hidden flex-shrink-0"
-            aria-label="Open menu"
+            aria-label={t.admin_open_menu_aria}
           >
             <Icon name="Bars3Icon" size={20} className="text-muted-foreground" />
           </button>
@@ -53,7 +53,7 @@ export default function AdminTopbar({ onMenuClick }: AdminTopbarProps) {
           <button
             onClick={() => { setLangOpen(!langOpen); setNotifOpen(false); }}
             className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-muted hover:bg-muted transition-colors text-xs font-semibold text-foreground"
-            aria-label="Change language"
+            aria-label={t.admin_change_language_aria}
           >
             <Icon name="GlobeAltIcon" size={14} className="text-muted-foreground" />
             <span>{language === 'en' ? 'EN' : 'NP'}</span>
@@ -79,7 +79,7 @@ export default function AdminTopbar({ onMenuClick }: AdminTopbarProps) {
           <button
             onClick={() => { setNotifOpen(!notifOpen); setLangOpen(false); }}
             className="relative p-2 rounded-lg hover:bg-muted transition-colors"
-            aria-label="Notifications"
+            aria-label={t.admin_notifications_aria}
           >
             <Icon name="BellIcon" size={18} className="text-muted-foreground" />
             <span className="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-500"></span>

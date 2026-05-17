@@ -9,5 +9,15 @@ const Chart = dynamic(() => import('./AppointmentTrendChartClient'), { ssr: fals
 export default function AppointmentTrendChart() {
   const { language } = useAdminLanguage();
   const t = getTranslations(language);
-  return <Chart chartTitle={t?.admin_chart_title} chartSubtitle={t?.admin_chart_subtitle} />;
+  return (
+    <Chart
+      language={language}
+      chartTitle={t.admin_chart_title}
+      chartSubtitle={t.admin_chart_subtitle_weekly}
+      legendAppointments={t.admin_chart_legend_appointments}
+      legendNewPatients={t.admin_chart_legend_new_patients}
+      serviceChartTitle={t.admin_chart_by_service_title}
+      countLabel={t.admin_chart_count}
+    />
+  );
 }

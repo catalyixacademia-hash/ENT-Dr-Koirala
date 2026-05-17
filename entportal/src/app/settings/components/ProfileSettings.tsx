@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Icon from '@/components/ui/AppIcon';
+import { useAdminLanguage } from '@/contexts/AdminLanguageContext';
+import { getTranslations } from '@/lib/i18n';
 
 interface ProfileFormData {
   fullName: string;
@@ -20,6 +22,8 @@ interface ProfileFormData {
 }
 
 export default function ProfileSettings() {
+  const { language } = useAdminLanguage();
+  const t = getTranslations(language);
   const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved'>('idle');
 
   const { register, handleSubmit, formState: { errors, isDirty } } = useForm<ProfileFormData>({
@@ -55,39 +59,39 @@ export default function ProfileSettings() {
       <div className="bg-white rounded-2xl border card-shadow p-6">
         <h2 className="text-base font-bold text-foreground mb-5 flex items-center gap-2">
           <Icon name="UserCircleIcon" size={18} className="text-primary" />
-          Doctor Profile
+          {t.settings_profile_section}
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div>
-            <label className="label-text">Full Name</label>
-            <input {...register('fullName', { required: 'Required' })} type="text" className="input-field" />
+            <label className="label-text">{t.settings_full_name}</label>
+            <input {...register('fullName', { required: t.common_required })} type="text" className="input-field" />
             {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName.message}</p>}
           </div>
           <div>
-            <label className="label-text">Designation</label>
+            <label className="label-text">{t.settings_designation}</label>
             <input {...register('designation')} type="text" className="input-field" />
           </div>
           <div className="sm:col-span-2">
-            <label className="label-text">Qualifications</label>
-            <p className="text-xs text-muted-foreground mb-1.5">Degrees, fellowships, and certifications</p>
+            <label className="label-text">{t.settings_qualifications}</label>
+            <p className="text-xs text-muted-foreground mb-1.5">{t.settings_qual_hint}</p>
             <input {...register('qualifications')} type="text" className="input-field" />
           </div>
           <div>
-            <label className="label-text">Years of Experience</label>
+            <label className="label-text">{t.settings_years_exp}</label>
             <input {...register('yearsExperience')} type="number" className="input-field" />
           </div>
           <div>
-            <label className="label-text">Phone Number</label>
+            <label className="label-text">{t.settings_phone}</label>
             <input {...register('phone')} type="tel" className="input-field" />
           </div>
           <div className="sm:col-span-2">
-            <label className="label-text">Specializations</label>
-            <p className="text-xs text-muted-foreground mb-1.5">Comma-separated list of specialties</p>
+            <label className="label-text">{t.settings_specializations}</label>
+            <p className="text-xs text-muted-foreground mb-1.5">{t.settings_spec_hint}</p>
             <input {...register('specializations')} type="text" className="input-field" />
           </div>
           <div className="sm:col-span-2">
-            <label className="label-text">Professional Bio</label>
-            <p className="text-xs text-muted-foreground mb-1.5">Shown on public website about section</p>
+            <label className="label-text">{t.settings_bio}</label>
+            <p className="text-xs text-muted-foreground mb-1.5">{t.settings_bio_hint}</p>
             <textarea {...register('bio')} rows={4} className="input-field resize-none" />
           </div>
         </div>
@@ -97,19 +101,19 @@ export default function ProfileSettings() {
       <div className="bg-white rounded-2xl border card-shadow p-6">
         <h2 className="text-base font-bold text-foreground mb-5 flex items-center gap-2">
           <Icon name="BuildingOfficeIcon" size={18} className="text-primary" />
-          Clinic Information
+          {t.settings_clinic_section}
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div>
-            <label className="label-text">Clinic Name</label>
+            <label className="label-text">{t.settings_clinic_name}</label>
             <input {...register('clinicName')} type="text" className="input-field" />
           </div>
           <div>
-            <label className="label-text">Contact Email</label>
+            <label className="label-text">{t.settings_contact_email}</label>
             <input {...register('email')} type="email" className="input-field" />
           </div>
           <div className="sm:col-span-2">
-            <label className="label-text">Clinic Address</label>
+            <label className="label-text">{t.settings_clinic_address}</label>
             <input {...register('clinicAddress')} type="text" className="input-field" />
           </div>
         </div>
@@ -119,25 +123,25 @@ export default function ProfileSettings() {
       <div className="bg-white rounded-2xl border card-shadow p-6">
         <h2 className="text-base font-bold text-foreground mb-5 flex items-center gap-2">
           <Icon name="GlobeAltIcon" size={18} className="text-primary" />
-          Social Media Handles
+          {t.settings_social_section}
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           <div>
-            <label className="label-text">TikTok Handle</label>
+            <label className="label-text">{t.settings_tiktok}</label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-muted-foreground">@</span>
               <input {...register('tiktokHandle')} type="text" className="input-field pl-7" />
             </div>
           </div>
           <div>
-            <label className="label-text">Instagram Handle</label>
+            <label className="label-text">{t.settings_instagram}</label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-muted-foreground">@</span>
               <input {...register('instagramHandle')} type="text" className="input-field pl-7" />
             </div>
           </div>
           <div>
-            <label className="label-text">Facebook Page Name</label>
+            <label className="label-text">{t.settings_facebook}</label>
             <input {...register('facebookUrl')} type="text" className="input-field" />
           </div>
         </div>
@@ -148,29 +152,29 @@ export default function ProfileSettings() {
         {isDirty && saveState === 'idle' && (
           <span className="text-xs text-amber-600 font-semibold flex items-center gap-1.5">
             <Icon name="ExclamationCircleIcon" size={14} />
-            You have unsaved changes
+            {t.settings_unsaved}
           </span>
         )}
         {saveState === 'saving' && (
           <span className="text-xs text-muted-foreground flex items-center gap-1.5">
             <Icon name="ArrowPathIcon" size={14} className="animate-spin" />
-            Saving...
+            {t.admin_saving}
           </span>
         )}
         {saveState === 'saved' && (
           <span className="text-xs text-secondary flex items-center gap-1.5">
             <Icon name="CheckCircleIcon" size={14} />
-            Profile saved successfully
+            {t.settings_profile_saved}
           </span>
         )}
         {saveState === 'idle' && !isDirty && <span />}
         <div className="flex items-center gap-3">
-          <button type="button" className="btn-outline text-sm px-4 py-2">Discard</button>
+          <button type="button" className="btn-outline text-sm px-4 py-2">{t.common_discard}</button>
           <button type="submit" disabled={saveState === 'saving'} className="btn-primary text-sm px-5 py-2">
             {saveState === 'saving' ? (
-              <><Icon name="ArrowPathIcon" size={15} className="animate-spin" /> Saving...</>
+              <><Icon name="ArrowPathIcon" size={15} className="animate-spin" /> {t.admin_saving}</>
             ) : (
-              <><Icon name="CheckIcon" size={15} /> Save Profile</>
+              <><Icon name="CheckIcon" size={15} /> {t.settings_save_profile}</>
             )}
           </button>
         </div>

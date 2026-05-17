@@ -2,6 +2,9 @@
 import React, { useState } from 'react';
 import Icon from '@/components/ui/AppIcon';
 import type { Patient } from './PatientCRM';
+import { useAdminLanguage } from '@/contexts/AdminLanguageContext';
+import { getTranslations } from '@/lib/i18n';
+import { statusLabel } from '@/lib/i18n-helpers';
 
 interface Props {
   patients: Patient[];
@@ -10,7 +13,22 @@ interface Props {
 }
 
 export default function PatientTable({ patients, selectedId, onSelect }: Props) {
+  const { language } = useAdminLanguage();
+  const t = getTranslations(language);
   const [page, setPage] = useState(1);
+
+  const translateGender = (gender: string) => {
+    if (gender === 'Male') return t.gender_male;
+    if (gender === 'Female') return t.gender_female;
+    if (gender === 'Other') return t.gender_other;
+    return gender;
+  };
+
+  const translateStatus = (status: string) => {
+    if (status === 'active') return t.admin_active;
+    if (status === 'inactive') return t.admin_inactive;
+    return statusLabel(language, status);
+  };
   const perPage = 10;
   const totalPages = Math.ceil(patients.length / perPage);
   const paginated = patients.slice((page - 1) * perPage, page * perPage);
@@ -21,7 +39,18 @@ export default function PatientTable({ patients, selectedId, onSelect }: Props) 
         <table className="w-full text-sm min-w-[700px]">
           <thead>
             <tr className="border-b bg-muted/30">
-              {['Patient', 'Age/Gender', 'Contact', 'City', 'Last Visit', 'Visits', 'Diagnoses', 'Next Appt', 'Status', ''].map((h, i) => (
+              {[
+                t.admin_col_patient,
+                t.admin_col_age_gender,
+                t.admin_col_contact,
+                t.admin_col_city,
+                t.admin_col_last_visit,
+                t.admin_col_visits,
+                t.admin_col_diagnoses,
+                t.admin_col_next_appt,
+                t.patient_col_status,
+                '',
+              ].map((h, i) => (
                 <th key={`pth-${i}`} className="px-4 py-3 text-left text-xs font-bold text-muted-foreground uppercase tracking-wider whitespace-nowrap">
                   {h}
                 </th>
@@ -36,8 +65,8 @@ export default function PatientTable({ patients, selectedId, onSelect }: Props) 
                     <div className="w-12 h-12 rounded-2xl bg-muted flex items-center justify-center">
                       <Icon name="UserGroupIcon" size={24} className="text-muted-foreground" />
                     </div>
-                    <p className="text-sm font-semibold text-foreground">No patients found</p>
-                    <p className="text-xs text-muted-foreground">Try a different search term</p>
+                    <p className="text-sm font-semibold text-foreground">{t.admin_no_patients}</p>
+                    <p className="text-xs text-muted-foreground">{t.admin_no_patients_sub}</p>
                   </div>
                 </td>
               </tr>
@@ -62,8 +91,8 @@ export default function PatientTable({ patients, selectedId, onSelect }: Props) 
                     </div>
                   </td>
                   <td className="px-4 py-3 whitespace-nowrap">
-                    <p className="text-sm font-medium text-foreground">{patient.age} yrs</p>
-                    <p className="text-xs text-muted-foreground">{patient.gender}</p>
+                    <p className="text-sm font-medium text-foreground">{patient.age} {t.admin_age_yrs}</p>
+                    <p className="text-xs text-muted-foreground">{translateGender(patient.gender)}</p>
                   </td>
                   <td className="px-4 py-3">
                     <p className="text-xs font-medium text-foreground">{patient.phone}</p>
@@ -99,15 +128,15 @@ export default function PatientTable({ patients, selectedId, onSelect }: Props) 
                   </td>
                   <td className="px-4 py-3">
                     <span className={`status-badge ${patient.status === 'active' ? 'status-confirmed' : 'status-cancelled'}`}>
-                      {patient.status}
+                      {translateStatus(patient.status)}
                     </span>
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-1">
-                      <button title="View patient record" className="p-1.5 rounded-lg hover:bg-muted transition-colors">
+                      <button title={t.admin_patient_view_aria} aria-label={t.admin_patient_view_aria} className="p-1.5 rounded-lg hover:bg-muted transition-colors">
                         <Icon name="EyeIcon" size={14} className="text-muted-foreground" />
                       </button>
-                      <button title="Edit patient record" className="p-1.5 rounded-lg hover:bg-muted transition-colors">
+                      <button title={t.admin_patient_edit_aria} aria-label={t.admin_patient_edit_aria} className="p-1.5 rounded-lg hover:bg-muted transition-colors">
                         <Icon name="PencilSquareIcon" size={14} className="text-muted-foreground" />
                       </button>
                     </div>
@@ -122,7 +151,7 @@ export default function PatientTable({ patients, selectedId, onSelect }: Props) 
       {totalPages > 1 && (
         <div className="border-t px-4 py-3 flex items-center justify-between bg-muted/10">
           <span className="text-xs text-muted-foreground">
-            {(page - 1) * perPage + 1}–{Math.min(page * perPage, patients.length)} of {patients.length} patients
+            {(page - 1) * perPage + 1}–{Math.min(page * perPage, patients.length)} {t.admin_of} {patients.length} {t.admin_pagination_patients}
           </span>
           <div className="flex items-center gap-1">
             <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="p-1.5 rounded-lg hover:bg-muted disabled:opacity-40 transition-colors">

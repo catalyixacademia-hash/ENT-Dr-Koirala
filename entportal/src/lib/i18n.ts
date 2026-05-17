@@ -1,3 +1,5 @@
+import { extendedEn, extendedNe } from './i18n-extended';
+
 export type Language = 'en' | 'ne';
 
 export const SUPPORTED_LANGUAGES: { code: Language; label: string; nativeLabel: string }[] = [
@@ -113,7 +115,6 @@ const translations = {
     kpi_vs_last_month_neg: '-2.1% vs last month',
     kpi_vs_april: '+8 vs April',
 
-    // Today\'s Scheduleadmin_todays_schedule: "Today's Schedule",
     admin_appointments_count: '8 appointments · May 17',
     admin_view_all: 'View all',
     admin_status_confirmed: 'confirmed',
@@ -321,5 +322,7 @@ const translations = {
 };
 
 export function getTranslations(language: Language) {
-  return translations[language] ?? translations['en'];
+  const base = translations[language] ?? translations.en;
+  const extra = language === 'ne' ? extendedNe : extendedEn;
+  return { ...base, ...extra } as typeof translations.en & typeof extendedEn;
 }

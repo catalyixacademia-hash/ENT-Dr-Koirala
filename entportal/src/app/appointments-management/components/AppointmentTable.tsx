@@ -4,6 +4,7 @@ import Icon from '@/components/ui/AppIcon';
 import type { Appointment, AppointmentStatus } from './AppointmentsManager';
 import { useAdminLanguage } from '@/contexts/AdminLanguageContext';
 import { getTranslations } from '@/lib/i18n';
+import { statusLabel, serviceLabel } from '@/lib/i18n-helpers';
 
 interface Props {
   appointments: Appointment[];
@@ -149,7 +150,7 @@ export default function AppointmentTable({ appointments, selectedIds, onSelectId
                         <p className="text-xs text-muted-foreground">{appt.phone}</p>
                       </div>
                       {appt.isNew && (
-                        <span className="px-1.5 py-0.5 rounded-full text-xs font-bold bg-accent/10 text-accent">NEW</span>
+                        <span className="px-1.5 py-0.5 rounded-full text-xs font-bold bg-accent/10 text-accent">{t.admin_badge_new}</span>
                       )}
                     </div>
                   </td>
@@ -161,7 +162,7 @@ export default function AppointmentTable({ appointments, selectedIds, onSelectId
                   </td>
                   <td className="px-4 py-3">
                     <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-muted text-muted-foreground whitespace-nowrap">
-                      {appt.serviceType}
+                      {serviceLabel(language, appt.serviceType)}
                     </span>
                   </td>
                   <td className="px-4 py-3 text-sm text-muted-foreground max-w-xs">
@@ -176,7 +177,7 @@ export default function AppointmentTable({ appointments, selectedIds, onSelectId
                         onClick={() => setStatusDropdown(statusDropdown === appt.id ? null : appt.id)}
                         className={`status-badge ${statusBadgeClass(appt.status)} cursor-pointer hover:opacity-80 transition-opacity`}
                       >
-                        {appt.status}
+                        {statusLabel(language, appt.status)}
                         <Icon name="ChevronDownIcon" size={10} />
                       </button>
                       {statusDropdown === appt.id && (
@@ -187,7 +188,7 @@ export default function AppointmentTable({ appointments, selectedIds, onSelectId
                               onClick={() => { onUpdateStatus(appt.id, s); setStatusDropdown(null); }}
                               className={`w-full text-left px-3 py-2 text-xs font-semibold hover:bg-muted transition-colors ${appt.status === s ? 'text-primary' : 'text-foreground'}`}
                             >
-                              {s.charAt(0).toUpperCase() + s.slice(1)}
+                              {statusLabel(language, s)}
                             </button>
                           ))}
                         </div>
@@ -198,19 +199,22 @@ export default function AppointmentTable({ appointments, selectedIds, onSelectId
                     <div className="flex items-center justify-end gap-1">
                       <button
                         onClick={() => onViewDetail(appt)}
-                        title="View appointment details"
+                        title={t.admin_action_view_aria}
+                        aria-label={t.admin_action_view_aria}
                         className="p-1.5 rounded-lg hover:bg-muted transition-colors"
                       >
                         <Icon name="EyeIcon" size={15} className="text-muted-foreground" />
                       </button>
                       <button
-                        title="Edit appointment"
+                        title={t.admin_action_edit_aria}
+                        aria-label={t.admin_action_edit_aria}
                         className="p-1.5 rounded-lg hover:bg-muted transition-colors"
                       >
                         <Icon name="PencilSquareIcon" size={15} className="text-muted-foreground" />
                       </button>
                       <button
-                        title="Cancel appointment"
+                        title={t.admin_action_cancel_aria}
+                        aria-label={t.admin_action_cancel_aria}
                         onClick={() => onUpdateStatus(appt.id, 'cancelled')}
                         className="p-1.5 rounded-lg hover:bg-red-50 transition-colors"
                       >

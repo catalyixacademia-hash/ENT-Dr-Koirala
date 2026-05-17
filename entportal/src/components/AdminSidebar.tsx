@@ -78,7 +78,7 @@ export default function AdminSidebar({ currentPath, onClose }: AdminSidebarProps
             <button
               onClick={() => setCollapsed(true)}
               className="p-1.5 rounded-lg hover:bg-white/10 transition-colors hidden lg:flex"
-              aria-label="Collapse sidebar"
+              aria-label={t.admin_sidebar_collapse}
             >
               <Icon name="ChevronLeftIcon" size={16} className="text-slate-400" />
             </button>
@@ -88,7 +88,7 @@ export default function AdminSidebar({ currentPath, onClose }: AdminSidebarProps
             <button
               onClick={onClose}
               className="p-1.5 rounded-lg hover:bg-white/10 transition-colors lg:hidden"
-              aria-label="Close sidebar"
+              aria-label={t.admin_sidebar_close}
             >
               <Icon name="XMarkIcon" size={16} className="text-slate-400" />
             </button>
@@ -100,7 +100,7 @@ export default function AdminSidebar({ currentPath, onClose }: AdminSidebarProps
         <button
           onClick={() => setCollapsed(false)}
           className="mx-auto mt-2 p-1.5 rounded-lg hover:bg-white/10 transition-colors hidden lg:flex"
-          aria-label="Expand sidebar"
+          aria-label={t.admin_sidebar_expand}
         >
           <Icon name="ChevronRightIcon" size={16} className="text-slate-400" />
         </button>
@@ -182,8 +182,8 @@ export default function AdminSidebar({ currentPath, onClose }: AdminSidebarProps
               onClick={handleSignOut}
               disabled={signingOut}
               className="p-2 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
-              title="Sign out"
-              aria-label="Sign out"
+              title={t.admin_sign_out}
+              aria-label={t.admin_sign_out}
             >
               <Icon name="ArrowRightOnRectangleIcon" size={18} />
             </button>

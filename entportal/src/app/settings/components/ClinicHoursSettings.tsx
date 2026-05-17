@@ -1,6 +1,9 @@
-'use client';
+﻿'use client';
 import React, { useState } from 'react';
 import Icon from '@/components/ui/AppIcon';
+import { useAdminLanguage } from '@/contexts/AdminLanguageContext';
+import { getTranslations } from '@/lib/i18n';
+import { dayLabel } from '@/lib/i18n-helpers';
 
 const DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
@@ -21,6 +24,8 @@ const DEFAULT_HOURS: Record<string, DaySchedule> = {
 };
 
 export default function ClinicHoursSettings() {
+  const { language } = useAdminLanguage();
+  const t = getTranslations(language);
   const [hours, setHours] = useState(DEFAULT_HOURS);
   const [saved, setSaved] = useState(false);
 
@@ -50,9 +55,9 @@ export default function ClinicHoursSettings() {
       <div className="bg-white rounded-2xl border card-shadow p-6">
         <h2 className="text-base font-bold text-foreground mb-5 flex items-center gap-2">
           <Icon name="ClockIcon" size={18} className="text-primary" />
-          Clinic Hours
+          {t.settings_clinic_hours_title}
         </h2>
-        <p className="text-sm text-muted-foreground mb-6">Set your weekly schedule. These hours will be shown on the public website.</p>
+        <p className="text-sm text-muted-foreground mb-6">{t.settings_clinic_hours_desc}</p>
 
         <div className="space-y-3">
           {DAYS.map((day) => {
@@ -63,7 +68,7 @@ export default function ClinicHoursSettings() {
                 className={`flex items-center gap-4 p-4 rounded-xl border transition-all ${schedule.isOpen ? 'bg-white' : 'bg-muted/20 opacity-60'}`}
               >
                 <div className="w-24 flex-shrink-0">
-                  <p className="text-sm font-semibold text-foreground">{day}</p>
+                  <p className="text-sm font-semibold text-foreground">{dayLabel(language, day)}</p>
                 </div>
 
                 {/* Toggle */}
@@ -79,14 +84,14 @@ export default function ClinicHoursSettings() {
                 {schedule.isOpen ? (
                   <div className="flex flex-wrap items-center gap-4 flex-1">
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-semibold text-muted-foreground">Morning</span>
+                      <span className="text-xs font-semibold text-muted-foreground">{t.settings_morning}</span>
                       <input
                         type="time"
                         value={schedule.morning.from}
                         onChange={(e) => updateTime(day, 'morning', 'from', e.target.value)}
                         className="input-field py-1.5 px-2 text-xs w-28"
                       />
-                      <span className="text-xs text-muted-foreground">to</span>
+                      <span className="text-xs text-muted-foreground">{t.common_to}</span>
                       <input
                         type="time"
                         value={schedule.morning.to}
@@ -95,14 +100,14 @@ export default function ClinicHoursSettings() {
                       />
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-xs font-semibold text-muted-foreground">Evening</span>
+                      <span className="text-xs font-semibold text-muted-foreground">{t.settings_evening}</span>
                       <input
                         type="time"
                         value={schedule.evening.from}
                         onChange={(e) => updateTime(day, 'evening', 'from', e.target.value)}
                         className="input-field py-1.5 px-2 text-xs w-28"
                       />
-                      <span className="text-xs text-muted-foreground">to</span>
+                      <span className="text-xs text-muted-foreground">{t.common_to}</span>
                       <input
                         type="time"
                         value={schedule.evening.to}
@@ -112,7 +117,7 @@ export default function ClinicHoursSettings() {
                     </div>
                   </div>
                 ) : (
-                  <span className="text-xs font-semibold text-muted-foreground">Closed</span>
+                  <span className="text-xs font-semibold text-muted-foreground">{t.settings_closed}</span>
                 )}
               </div>
             );
@@ -124,12 +129,12 @@ export default function ClinicHoursSettings() {
         {saved && (
           <span className="flex items-center gap-1.5 text-sm text-secondary font-semibold">
             <Icon name="CheckCircleIcon" size={16} />
-            Clinic hours saved
+            {t.settings_hours_saved}
           </span>
         )}
         <button onClick={handleSave} className="btn-primary text-sm px-5 py-2.5">
           <Icon name="CheckIcon" size={15} />
-          Save Clinic Hours
+          {t.settings_save_hours}
         </button>
       </div>
     </div>

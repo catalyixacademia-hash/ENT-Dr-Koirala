@@ -2,6 +2,9 @@
 import React from 'react';
 import Icon from '@/components/ui/AppIcon';
 import type { FilterState } from './AppointmentsManager';
+import { useAdminLanguage } from '@/contexts/AdminLanguageContext';
+import { getTranslations } from '@/lib/i18n';
+import { statusLabel, serviceLabel } from '@/lib/i18n-helpers';
 
 const SERVICE_TYPES = [
   'Ear Disorders', 'Nose & Sinus', 'Throat & Voice',
@@ -14,6 +17,8 @@ interface Props {
 }
 
 export default function AppointmentFilters({ filters, onChange }: Props) {
+  const { language } = useAdminLanguage();
+  const t = getTranslations(language);
   const update = (key: keyof FilterState, value: string) =>
     onChange({ ...filters, [key]: value });
 
@@ -27,7 +32,7 @@ export default function AppointmentFilters({ filters, onChange }: Props) {
           <Icon name="MagnifyingGlassIcon" size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
           <input
             type="text"
-            placeholder="Search by patient name, phone, or reason..."
+            placeholder={t.admin_appointment_search_placeholder}
             value={filters.search}
             onChange={(e) => update('search', e.target.value)}
             className="input-field pl-9 py-2.5 text-sm"
@@ -40,11 +45,10 @@ export default function AppointmentFilters({ filters, onChange }: Props) {
           onChange={(e) => update('status', e.target.value)}
           className="input-field w-auto py-2.5 text-sm"
         >
-          <option value="">All Statuses</option>
-          <option value="pending">Pending</option>
-          <option value="confirmed">Confirmed</option>
-          <option value="completed">Completed</option>
-          <option value="cancelled">Cancelled</option>
+          <option value="">{t.admin_filter_all_statuses}</option>
+          {(['pending', 'confirmed', 'completed', 'cancelled'] as const).map((s) => (
+            <option key={s} value={s}>{statusLabel(language, s)}</option>
+          ))}
         </select>
 
         {/* Service Type */}
@@ -53,9 +57,9 @@ export default function AppointmentFilters({ filters, onChange }: Props) {
           onChange={(e) => update('serviceType', e.target.value)}
           className="input-field w-auto py-2.5 text-sm"
         >
-          <option value="">All Services</option>
+          <option value="">{t.admin_filter_all_services}</option>
           {SERVICE_TYPES.map((s) => (
-            <option key={`svc-opt-${s}`} value={s}>{s}</option>
+            <option key={`svc-opt-${s}`} value={s}>{serviceLabel(language, s)}</option>
           ))}
         </select>
 
@@ -81,7 +85,7 @@ export default function AppointmentFilters({ filters, onChange }: Props) {
             className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-sm font-semibold text-red-500 hover:bg-red-50 transition-colors border border-red-200"
           >
             <Icon name="XMarkIcon" size={14} />
-            Clear Filters
+            {t.admin_clear_filters}
           </button>
         )}
       </div>

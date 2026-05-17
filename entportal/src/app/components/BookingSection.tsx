@@ -81,7 +81,7 @@ export default function BookingSection({ language }: BookingSectionProps) {
     }
     setLoading(false);
     const encoded = encodeURIComponent(JSON.stringify(formData));
-    router.push(`/booking-confirmation?data=${encoded}`);
+    router.push(`/booking-confirmation?data=${encoded}&lang=${language}`);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
