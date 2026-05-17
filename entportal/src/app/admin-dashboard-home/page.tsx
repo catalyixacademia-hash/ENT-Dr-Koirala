@@ -28,11 +28,11 @@ function DashboardContent() {
         </div>
       </div>
       <DashboardKPIGrid />
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
-        <div className="xl:col-span-2">
+      <div className="grid grid-cols-1 xl:grid-cols-[3fr_2fr] gap-6">
+        <div className="min-w-0">
           <AppointmentTrendChart />
         </div>
-        <div className="xl:col-span-1">
+        <div className="min-w-0">
           <TodaySchedule />
         </div>
       </div>

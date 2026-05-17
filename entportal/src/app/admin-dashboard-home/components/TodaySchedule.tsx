@@ -41,19 +41,23 @@ export default function TodaySchedule() {
           return (
             <div
               key={appt?.id}
-              className={`flex items-center gap-3 p-3 rounded-xl border transition-colors ${
+              className={`flex items-start gap-3 p-3 rounded-xl border transition-colors ${
                 isPast ? 'opacity-50 bg-muted/30' : 'bg-muted/20 hover:bg-muted/40'
               }`}
             >
-              <div className="text-center w-14 flex-shrink-0">
+              <div className="text-center w-12 xl:w-14 flex-shrink-0">
                 <p className="text-xs font-bold text-foreground">{appt?.time?.split(' ')?.[0]}</p>
                 <p className="text-xs text-muted-foreground">{appt?.time?.split(' ')?.[1]}</p>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-foreground truncate">{appt?.patient}</p>
-                <p className="text-xs text-muted-foreground truncate">{appt?.reason}</p>
+                <p className="text-sm font-semibold text-foreground truncate xl:truncate-none xl:whitespace-normal">
+                  {appt?.patient}
+                </p>
+                <p className="text-xs text-muted-foreground truncate xl:truncate-none xl:whitespace-normal">
+                  {appt?.reason}
+                </p>
               </div>
-              <div className="flex-shrink-0">
+              <div className="flex-shrink-0 xl:max-w-[7.5rem]">
                 <span className={`status-badge ${appt?.status === 'confirmed' ? 'status-confirmed' : 'status-pending'}`}>
                   {appt?.status === 'confirmed' ? (
                     <Icon name="CheckCircleIcon" size={10} />

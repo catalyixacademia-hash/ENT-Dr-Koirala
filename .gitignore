@@ -3,6 +3,7 @@
 
 # Root workspace dependencies
 node_modules/
+.next/
 
 # Dependencies & build (entportal)
 entportal/node_modules/
@@ -20,3 +21,5 @@ entportal/.vercel/
 *.log
 .DS_Store
 Thumbs.db
+
+.vercel
