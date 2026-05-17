@@ -23,7 +23,12 @@ function LoginFormInner() {
   const searchParams = useSearchParams();
   const redirectTo = searchParams.get('redirect') || '/admin-dashboard-home';
 
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm<LoginFormData>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<LoginFormData>({
     defaultValues: { email: ADMIN_EMAIL },
   });
 
@@ -50,13 +55,19 @@ function LoginFormInner() {
   return (
     <div className="min-h-screen flex">
       {/* Left Panel */}
-      <div className="hidden lg:flex lg:w-[55%] xl:w-[60%] relative overflow-hidden"
-        style={{ background: 'linear-gradient(135deg, #0F172A 0%, #0F766E 60%, #14B8A6 100%)' }}>
+      <div
+        className="hidden lg:flex lg:w-[55%] xl:w-[60%] relative overflow-hidden"
+        style={{ background: 'linear-gradient(135deg, #0F172A 0%, #0F766E 60%, #14B8A6 100%)' }}
+      >
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute -top-24 -left-24 w-80 h-80 rounded-full opacity-20"
-            style={{ background: 'radial-gradient(circle, #22D3EE 0%, transparent 70%)' }} />
-          <div className="absolute bottom-0 right-0 w-96 h-96 rounded-full opacity-10"
-            style={{ background: 'radial-gradient(circle, #10B981 0%, transparent 70%)' }} />
+          <div
+            className="absolute -top-24 -left-24 w-80 h-80 rounded-full opacity-20"
+            style={{ background: 'radial-gradient(circle, #22D3EE 0%, transparent 70%)' }}
+          />
+          <div
+            className="absolute bottom-0 right-0 w-96 h-96 rounded-full opacity-10"
+            style={{ background: 'radial-gradient(circle, #10B981 0%, transparent 70%)' }}
+          />
         </div>
         <div className="relative flex flex-col justify-between p-12 w-full">
           {/* Logo */}
@@ -75,11 +86,13 @@ function LoginFormInner() {
               Secure Doctor Dashboard
             </div>
             <h1 className="text-4xl xl:text-5xl font-extrabold text-white mb-6 leading-tight text-balance">
-              Manage Your Practice<br />
+              Manage Your Practice
+              <br />
               <span className="text-accent">From One Place</span>
             </h1>
             <p className="text-white/70 text-lg leading-relaxed mb-10 max-w-md">
-              Access your appointment calendar, patient records, and clinic analytics — all secured with medical-grade access controls.
+              Access your appointment calendar, patient records, and clinic analytics — all secured
+              with medical-grade access controls.
             </p>
 
             <div className="grid grid-cols-3 gap-4">
@@ -88,11 +101,20 @@ function LoginFormInner() {
                 { id: 'feat-crm', icon: 'UserGroupIcon', label: 'Patient\nRecords CRM' },
                 { id: 'feat-analytics', icon: 'ChartBarIcon', label: 'Analytics\n& Insights' },
               ].map((feat) => (
-                <div key={feat.id} className="bg-white/10 border border-white/20 rounded-2xl p-4 text-center">
+                <div
+                  key={feat.id}
+                  className="bg-white/10 border border-white/20 rounded-2xl p-4 text-center"
+                >
                   <div className="w-10 h-10 rounded-xl bg-white/15 flex items-center justify-center mx-auto mb-3">
-                    <Icon name={feat.icon as Parameters<typeof Icon>[0]['name']} size={20} className="text-white" />
+                    <Icon
+                      name={feat.icon as Parameters<typeof Icon>[0]['name']}
+                      size={20}
+                      className="text-white"
+                    />
                   </div>
-                  <p className="text-white text-xs font-semibold whitespace-pre-line leading-snug">{feat.label}</p>
+                  <p className="text-white text-xs font-semibold whitespace-pre-line leading-snug">
+                    {feat.label}
+                  </p>
                 </div>
               ))}
             </div>
@@ -106,7 +128,11 @@ function LoginFormInner() {
               { id: 'trust-3', icon: 'CheckBadgeIcon', label: 'Verified Access Only' },
             ].map((t) => (
               <div key={t.id} className="flex items-center gap-2 text-white/70 text-xs">
-                <Icon name={t.icon as Parameters<typeof Icon>[0]['name']} size={14} className="text-accent" />
+                <Icon
+                  name={t.icon as Parameters<typeof Icon>[0]['name']}
+                  size={14}
+                  className="text-accent"
+                />
                 {t.label}
               </div>
             ))}
@@ -123,12 +149,20 @@ function LoginFormInner() {
             <span className="font-bold text-foreground text-lg">ENTPortal</span>
           </div>
 
-          <h2 className="text-2xl font-extrabold text-foreground mb-2">Welcome back, {ADMIN_FULL_NAME}</h2>
-          <p className="text-muted-foreground text-sm mb-8">Sign in to access your admin dashboard</p>
+          <h2 className="text-2xl font-extrabold text-foreground mb-2">
+            Welcome back, {ADMIN_FULL_NAME}
+          </h2>
+          <p className="text-muted-foreground text-sm mb-8">
+            Sign in to access your admin dashboard
+          </p>
 
           {error && (
             <div className="mb-5 p-4 rounded-xl bg-red-50 border border-red-200 flex items-start gap-3">
-              <Icon name="ExclamationCircleIcon" size={18} className="text-red-500 flex-shrink-0 mt-0.5" />
+              <Icon
+                name="ExclamationCircleIcon"
+                size={18}
+                className="text-red-500 flex-shrink-0 mt-0.5"
+              />
               <p className="text-sm text-red-700">{error}</p>
             </div>
           )}
@@ -137,7 +171,11 @@ function LoginFormInner() {
             <div>
               <label className="label-text">Email Address</label>
               <div className="relative">
-                <Icon name="EnvelopeIcon" size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                <Icon
+                  name="EnvelopeIcon"
+                  size={16}
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground"
+                />
                 <input
                   {...register('email', {
                     required: 'Email is required',
@@ -154,12 +192,21 @@ function LoginFormInner() {
             <div>
               <div className="flex items-center justify-between mb-1.5">
                 <label className="label-text mb-0">Password</label>
-                <a href="#" className="text-xs font-semibold text-primary hover:underline">Forgot password?</a>
+                <a href="#" className="text-xs font-semibold text-primary hover:underline">
+                  Forgot password?
+                </a>
               </div>
               <div className="relative">
-                <Icon name="LockClosedIcon" size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
+                <Icon
+                  name="LockClosedIcon"
+                  size={16}
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground"
+                />
                 <input
-                  {...register('password', { required: 'Password is required', minLength: { value: 6, message: 'Minimum 6 characters' } })}
+                  {...register('password', {
+                    required: 'Password is required',
+                    minLength: { value: 6, message: 'Minimum 6 characters' },
+                  })}
                   type={showPassword ? 'text' : 'password'}
                   placeholder="••••••••••"
                   className="input-field pl-10 pr-10"
@@ -173,7 +220,9 @@ function LoginFormInner() {
                   <Icon name={showPassword ? 'EyeSlashIcon' : 'EyeIcon'} size={16} />
                 </button>
               </div>
-              {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>}
+              {errors.password && (
+                <p className="text-red-500 text-xs mt-1">{errors.password.message}</p>
+              )}
             </div>
 
             <div className="flex items-center gap-2">
@@ -183,7 +232,10 @@ function LoginFormInner() {
                 id="rememberMe"
                 className="w-4 h-4 rounded accent-primary cursor-pointer"
               />
-              <label htmlFor="rememberMe" className="text-sm font-medium text-muted-foreground cursor-pointer">
+              <label
+                htmlFor="rememberMe"
+                className="text-sm font-medium text-muted-foreground cursor-pointer"
+              >
                 Remember me for 30 days
               </label>
             </div>
@@ -210,7 +262,9 @@ function LoginFormInner() {
           {/* Demo Credentials Box */}
           <div className="mt-6 p-4 rounded-2xl bg-accent/5 border border-accent/20">
             <div className="flex items-center justify-between mb-3">
-              <p className="text-xs font-bold text-foreground uppercase tracking-wider">Admin Credentials</p>
+              <p className="text-xs font-bold text-foreground uppercase tracking-wider">
+                Admin Credentials
+              </p>
               <button
                 onClick={autofill}
                 className="text-xs font-semibold text-accent hover:text-primary transition-colors flex items-center gap-1"
@@ -229,7 +283,9 @@ function LoginFormInner() {
               <div className="flex items-center justify-between bg-white rounded-lg px-3 py-2 border">
                 <div>
                   <p className="text-xs text-muted-foreground">Password</p>
-                  <p className="text-xs text-muted-foreground font-mono">Use ADMIN_PASSWORD from .env</p>
+                  <p className="text-xs text-muted-foreground font-mono">
+                    Use ADMIN_PASSWORD from .env
+                  </p>
                 </div>
               </div>
             </div>
@@ -249,7 +305,13 @@ function LoginFormInner() {
 
 export default function LoginForm() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center text-muted-foreground">Loading...</div>}>
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center text-muted-foreground">
+          Loading...
+        </div>
+      }
+    >
       <LoginFormInner />
     </Suspense>
   );

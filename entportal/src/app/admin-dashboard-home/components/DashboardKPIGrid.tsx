@@ -85,19 +85,34 @@ export default function DashboardKPIGrid() {
           className={`${card.bgClass} rounded-2xl p-4 sm:p-5 border card-shadow hover:card-shadow-md transition-all duration-200`}
         >
           <div className="flex items-start justify-between mb-3 sm:mb-4">
-            <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl ${card.iconBg} flex items-center justify-center`}>
-              <Icon name={card.icon as Parameters<typeof Icon>[0]['name']} size={18} className={card.iconColor} />
+            <div
+              className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl ${card.iconBg} flex items-center justify-center`}
+            >
+              <Icon
+                name={card.icon as Parameters<typeof Icon>[0]['name']}
+                size={18}
+                className={card.iconColor}
+              />
             </div>
             {card.changeType === 'alert' && (
               <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
             )}
           </div>
-          <p className="text-xl sm:text-2xl font-extrabold text-foreground font-tabular mb-1">{card.value}</p>
-          <p className="text-xs font-semibold text-muted-foreground mb-2 leading-snug">{card.label}</p>
-          <p className={`text-xs font-semibold flex items-center gap-1 ${
-            card.changeType === 'positive' ? 'text-secondary' :
-            card.changeType === 'negative' ? 'text-red-500' : 'text-amber-600'
-          }`}>
+          <p className="text-xl sm:text-2xl font-extrabold text-foreground font-tabular mb-1">
+            {card.value}
+          </p>
+          <p className="text-xs font-semibold text-muted-foreground mb-2 leading-snug">
+            {card.label}
+          </p>
+          <p
+            className={`text-xs font-semibold flex items-center gap-1 ${
+              card.changeType === 'positive'
+                ? 'text-secondary'
+                : card.changeType === 'negative'
+                  ? 'text-red-500'
+                  : 'text-amber-600'
+            }`}
+          >
             {card.changeType === 'positive' && <Icon name="ArrowTrendingUpIcon" size={12} />}
             {card.changeType === 'negative' && <Icon name="ArrowTrendingDownIcon" size={12} />}
             {card.changeType === 'alert' && <Icon name="ExclamationTriangleIcon" size={12} />}

@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import PublicNavbar from './components/PublicNavbar';
 import HeroSection from './components/HeroSection';
 import AboutSection from './components/AboutSection';
@@ -10,10 +10,11 @@ import BlogSection from './components/BlogSection';
 import SocialMediaHub from './components/SocialMediaHub';
 import BookingSection from './components/BookingSection';
 import PublicFooter from './components/PublicFooter';
-import type { Language } from '@/lib/i18n';
+import WhatsAppButton from './components/WhatsAppButton';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function HomePage() {
-  const [language, setLanguage] = useState<Language>('en');
+  const { language, setLanguage } = useLanguage();
 
   return (
     <main>
@@ -27,6 +28,7 @@ export default function HomePage() {
       <BlogSection />
       <BookingSection language={language} />
       <PublicFooter language={language} />
+      <WhatsAppButton language={language} />
     </main>
   );
 }

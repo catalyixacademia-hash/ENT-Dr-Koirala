@@ -3,15 +3,32 @@ import React, { useState } from 'react';
 import Icon from '@/components/ui/AppIcon';
 
 const TIME_SLOTS = [
-  '9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM',
-  '2:00 PM', '2:30 PM', '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM',
-  '5:00 PM', '5:30 PM', '6:00 PM', '6:30 PM', '7:00 PM', '7:30 PM',
+  '9:00 AM',
+  '9:30 AM',
+  '10:00 AM',
+  '10:30 AM',
+  '11:00 AM',
+  '11:30 AM',
+  '2:00 PM',
+  '2:30 PM',
+  '3:00 PM',
+  '3:30 PM',
+  '4:00 PM',
+  '4:30 PM',
+  '5:00 PM',
+  '5:30 PM',
+  '6:00 PM',
+  '6:30 PM',
+  '7:00 PM',
+  '7:30 PM',
 ];
 
 const DEFAULT_BLOCKED = ['2026-05-24', '2026-05-25', '2026-06-01'];
 
 export default function AvailabilitySettings() {
-  const [enabledSlots, setEnabledSlots] = useState<string[]>(TIME_SLOTS.filter((_, i) => i !== 5 && i !== 11));
+  const [enabledSlots, setEnabledSlots] = useState<string[]>(
+    TIME_SLOTS.filter((_, i) => i !== 5 && i !== 11)
+  );
   const [blockedDates, setBlockedDates] = useState<string[]>(DEFAULT_BLOCKED);
   const [newBlockedDate, setNewBlockedDate] = useState('');
   const [slotDuration, setSlotDuration] = useState('20');
@@ -52,20 +69,26 @@ export default function AvailabilitySettings() {
         <div className="flex items-center gap-4 flex-wrap">
           <div>
             <label className="label-text">Default Slot Duration</label>
-            <p className="text-xs text-muted-foreground mb-1.5">Duration for standard appointments</p>
+            <p className="text-xs text-muted-foreground mb-1.5">
+              Duration for standard appointments
+            </p>
             <select
               value={slotDuration}
               onChange={(e) => setSlotDuration(e.target.value)}
               className="input-field w-auto"
             >
               {['15', '20', '30', '45', '60'].map((d) => (
-                <option key={`dur-${d}`} value={d}>{d} minutes</option>
+                <option key={`dur-${d}`} value={d}>
+                  {d} minutes
+                </option>
               ))}
             </select>
           </div>
           <div className="flex items-center gap-3 p-4 bg-muted/20 rounded-xl">
             <Icon name="InformationCircleIcon" size={16} className="text-primary flex-shrink-0" />
-            <p className="text-xs text-muted-foreground">Patients will see available slots based on this duration during online booking.</p>
+            <p className="text-xs text-muted-foreground">
+              Patients will see available slots based on this duration during online booking.
+            </p>
           </div>
         </div>
       </div>
@@ -76,7 +99,9 @@ export default function AvailabilitySettings() {
           <Icon name="ClockIcon" size={18} className="text-primary" />
           Available Time Slots
         </h2>
-        <p className="text-xs text-muted-foreground mb-5">Click to enable or disable individual time slots for online booking</p>
+        <p className="text-xs text-muted-foreground mb-5">
+          Click to enable or disable individual time slots for online booking
+        </p>
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2">
           {TIME_SLOTS.map((slot) => {
             const isEnabled = enabledSlots.includes(slot);
@@ -86,7 +111,8 @@ export default function AvailabilitySettings() {
                 onClick={() => toggleSlot(slot)}
                 className={`py-2 px-3 rounded-xl text-xs font-semibold border transition-all ${
                   isEnabled
-                    ? 'gradient-primary text-white border-transparent' :'bg-white text-muted-foreground border-border hover:border-primary'
+                    ? 'gradient-primary text-white border-transparent'
+                    : 'bg-white text-muted-foreground border-border hover:border-primary'
                 }`}
               >
                 {slot}
@@ -105,7 +131,9 @@ export default function AvailabilitySettings() {
           <Icon name="NoSymbolIcon" size={18} className="text-red-500" />
           Blocked Dates (Leave / Holidays)
         </h2>
-        <p className="text-xs text-muted-foreground mb-5">These dates will show as unavailable for online booking</p>
+        <p className="text-xs text-muted-foreground mb-5">
+          These dates will show as unavailable for online booking
+        </p>
 
         <div className="flex gap-3 mb-4">
           <input
@@ -141,7 +169,9 @@ export default function AvailabilitySettings() {
             </div>
           ))}
           {blockedDates.length === 0 && (
-            <p className="text-xs text-muted-foreground">No blocked dates — all days are open for booking.</p>
+            <p className="text-xs text-muted-foreground">
+              No blocked dates — all days are open for booking.
+            </p>
           )}
         </div>
       </div>

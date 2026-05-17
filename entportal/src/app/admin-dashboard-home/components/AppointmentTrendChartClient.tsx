@@ -1,6 +1,16 @@
 'use client';
 import React from 'react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  BarChart,
+  Bar,
+} from 'recharts';
 
 const TREND_DATA = [
   { week: 'Mar W1', appointments: 22, newPatients: 6 },
@@ -59,7 +69,10 @@ interface AppointmentTrendChartClientProps {
   chartSubtitle?: string;
 }
 
-export default function AppointmentTrendChartClient({ chartTitle = 'Appointment Trends', chartSubtitle = 'Weekly volume — last 12 weeks' }: AppointmentTrendChartClientProps) {
+export default function AppointmentTrendChartClient({
+  chartTitle = 'Appointment Trends',
+  chartSubtitle = 'Weekly volume — last 12 weeks',
+}: AppointmentTrendChartClientProps) {
   return (
     <div className="bg-white rounded-2xl border card-shadow p-6">
       <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
@@ -93,22 +106,56 @@ export default function AppointmentTrendChartClient({ chartTitle = 'Appointment 
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
-            <XAxis dataKey="week" tick={{ fontSize: 10, fill: 'var(--muted-foreground)' }} tickLine={false} />
-            <YAxis tick={{ fontSize: 10, fill: 'var(--muted-foreground)' }} tickLine={false} axisLine={false} />
+            <XAxis
+              dataKey="week"
+              tick={{ fontSize: 10, fill: 'var(--muted-foreground)' }}
+              tickLine={false}
+            />
+            <YAxis
+              tick={{ fontSize: 10, fill: 'var(--muted-foreground)' }}
+              tickLine={false}
+              axisLine={false}
+            />
             <Tooltip content={<CustomTooltip />} />
-            <Area type="monotone" dataKey="appointments" name="Appointments" stroke="var(--primary)" strokeWidth={2} fill="url(#colorAppt)" dot={false} />
-            <Area type="monotone" dataKey="newPatients" name="New Patients" stroke="var(--secondary)" strokeWidth={2} fill="url(#colorNew)" dot={false} />
+            <Area
+              type="monotone"
+              dataKey="appointments"
+              name="Appointments"
+              stroke="var(--primary)"
+              strokeWidth={2}
+              fill="url(#colorAppt)"
+              dot={false}
+            />
+            <Area
+              type="monotone"
+              dataKey="newPatients"
+              name="New Patients"
+              stroke="var(--secondary)"
+              strokeWidth={2}
+              fill="url(#colorNew)"
+              dot={false}
+            />
           </AreaChart>
         </ResponsiveContainer>
       </div>
 
       <div className="border-t pt-5">
-        <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-4">Appointments by Service Type (May)</p>
+        <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-4">
+          Appointments by Service Type (May)
+        </p>
         <ResponsiveContainer width="100%" height={120}>
           <BarChart data={SERVICE_DATA} margin={{ top: 0, right: 4, bottom: 0, left: -20 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
-            <XAxis dataKey="service" tick={{ fontSize: 10, fill: 'var(--muted-foreground)' }} tickLine={false} />
-            <YAxis tick={{ fontSize: 10, fill: 'var(--muted-foreground)' }} tickLine={false} axisLine={false} />
+            <XAxis
+              dataKey="service"
+              tick={{ fontSize: 10, fill: 'var(--muted-foreground)' }}
+              tickLine={false}
+            />
+            <YAxis
+              tick={{ fontSize: 10, fill: 'var(--muted-foreground)' }}
+              tickLine={false}
+              axisLine={false}
+            />
             <Tooltip content={<CustomTooltip />} />
             <Bar dataKey="count" name="Count" fill="var(--accent)" radius={[4, 4, 0, 0]} />
           </BarChart>

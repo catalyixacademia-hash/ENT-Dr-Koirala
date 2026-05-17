@@ -5,14 +5,70 @@ import { useAdminLanguage } from '@/contexts/AdminLanguageContext';
 import { getTranslations } from '@/lib/i18n';
 
 const TODAY_APPOINTMENTS = [
-  { id: 'ta-1', time: '9:00 AM', patient: 'Priya Sharma', reason: 'Sinusitis Follow-up', status: 'confirmed', duration: '20 min' },
-  { id: 'ta-2', time: '9:30 AM', patient: 'Rohan Das', reason: 'Ear Infection', status: 'confirmed', duration: '30 min' },
-  { id: 'ta-3', time: '10:00 AM', patient: 'Neha Joshi', reason: 'Tonsil Assessment', status: 'pending', duration: '20 min' },
-  { id: 'ta-4', time: '10:30 AM', patient: 'Amir Khan', reason: 'Hearing Loss Eval', status: 'confirmed', duration: '45 min' },
-  { id: 'ta-5', time: '11:00 AM', patient: 'Sunita Patel', reason: 'Allergy Testing', status: 'confirmed', duration: '30 min' },
-  { id: 'ta-6', time: '11:30 AM', patient: 'Vikram Singh', reason: 'Post-Surgery Review', status: 'pending', duration: '20 min' },
-  { id: 'ta-7', time: '5:00 PM', patient: 'Deepa Nair', reason: 'Nasal Polyp Consult', status: 'confirmed', duration: '30 min' },
-  { id: 'ta-8', time: '5:30 PM', patient: 'Arjun Thapa', reason: 'Pediatric ENT', status: 'confirmed', duration: '25 min' },
+  {
+    id: 'ta-1',
+    time: '9:00 AM',
+    patient: 'Priya Sharma',
+    reason: 'Sinusitis Follow-up',
+    status: 'confirmed',
+    duration: '20 min',
+  },
+  {
+    id: 'ta-2',
+    time: '9:30 AM',
+    patient: 'Rohan Das',
+    reason: 'Ear Infection',
+    status: 'confirmed',
+    duration: '30 min',
+  },
+  {
+    id: 'ta-3',
+    time: '10:00 AM',
+    patient: 'Neha Joshi',
+    reason: 'Tonsil Assessment',
+    status: 'pending',
+    duration: '20 min',
+  },
+  {
+    id: 'ta-4',
+    time: '10:30 AM',
+    patient: 'Amir Khan',
+    reason: 'Hearing Loss Eval',
+    status: 'confirmed',
+    duration: '45 min',
+  },
+  {
+    id: 'ta-5',
+    time: '11:00 AM',
+    patient: 'Sunita Patel',
+    reason: 'Allergy Testing',
+    status: 'confirmed',
+    duration: '30 min',
+  },
+  {
+    id: 'ta-6',
+    time: '11:30 AM',
+    patient: 'Vikram Singh',
+    reason: 'Post-Surgery Review',
+    status: 'pending',
+    duration: '20 min',
+  },
+  {
+    id: 'ta-7',
+    time: '5:00 PM',
+    patient: 'Deepa Nair',
+    reason: 'Nasal Polyp Consult',
+    status: 'confirmed',
+    duration: '30 min',
+  },
+  {
+    id: 'ta-8',
+    time: '5:30 PM',
+    patient: 'Arjun Thapa',
+    reason: 'Pediatric ENT',
+    status: 'confirmed',
+    duration: '25 min',
+  },
 ];
 
 export default function TodaySchedule() {
@@ -27,7 +83,10 @@ export default function TodaySchedule() {
           <h3 className="text-base font-bold text-foreground">{t?.admin_todays_schedule}</h3>
           <p className="text-xs text-muted-foreground mt-0.5">{t?.admin_appointments_count}</p>
         </div>
-        <a href="/appointments-management" className="text-xs font-semibold text-primary hover:underline">
+        <a
+          href="/appointments-management"
+          className="text-xs font-semibold text-primary hover:underline"
+        >
           {t?.admin_view_all}
         </a>
       </div>
@@ -58,13 +117,17 @@ export default function TodaySchedule() {
                 </p>
               </div>
               <div className="flex-shrink-0 xl:max-w-[7.5rem]">
-                <span className={`status-badge ${appt?.status === 'confirmed' ? 'status-confirmed' : 'status-pending'}`}>
+                <span
+                  className={`status-badge ${appt?.status === 'confirmed' ? 'status-confirmed' : 'status-pending'}`}
+                >
                   {appt?.status === 'confirmed' ? (
                     <Icon name="CheckCircleIcon" size={10} />
                   ) : (
                     <Icon name="ClockIcon" size={10} />
                   )}
-                  {appt?.status === 'confirmed' ? t?.admin_status_confirmed : t?.admin_status_pending}
+                  {appt?.status === 'confirmed'
+                    ? t?.admin_status_confirmed
+                    : t?.admin_status_pending}
                 </span>
               </div>
             </div>

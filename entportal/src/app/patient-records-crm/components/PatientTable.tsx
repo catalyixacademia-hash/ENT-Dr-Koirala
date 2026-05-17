@@ -21,8 +21,22 @@ export default function PatientTable({ patients, selectedId, onSelect }: Props) 
         <table className="w-full text-sm min-w-[700px]">
           <thead>
             <tr className="border-b bg-muted/30">
-              {['Patient', 'Age/Gender', 'Contact', 'City', 'Last Visit', 'Visits', 'Diagnoses', 'Next Appt', 'Status', ''].map((h, i) => (
-                <th key={`pth-${i}`} className="px-4 py-3 text-left text-xs font-bold text-muted-foreground uppercase tracking-wider whitespace-nowrap">
+              {[
+                'Patient',
+                'Age/Gender',
+                'Contact',
+                'City',
+                'Last Visit',
+                'Visits',
+                'Diagnoses',
+                'Next Appt',
+                'Status',
+                '',
+              ].map((h, i) => (
+                <th
+                  key={`pth-${i}`}
+                  className="px-4 py-3 text-left text-xs font-bold text-muted-foreground uppercase tracking-wider whitespace-nowrap"
+                >
                   {h}
                 </th>
               ))}
@@ -52,11 +66,17 @@ export default function PatientTable({ patients, selectedId, onSelect }: Props) 
                     <div className="flex items-center gap-2.5">
                       <div className="w-8 h-8 rounded-full gradient-primary flex items-center justify-center flex-shrink-0">
                         <span className="text-white text-xs font-bold">
-                          {patient.name.split(' ').map((n) => n[0]).join('').slice(0, 2)}
+                          {patient.name
+                            .split(' ')
+                            .map((n) => n[0])
+                            .join('')
+                            .slice(0, 2)}
                         </span>
                       </div>
                       <div>
-                        <p className="font-semibold text-foreground whitespace-nowrap">{patient.name}</p>
+                        <p className="font-semibold text-foreground whitespace-nowrap">
+                          {patient.name}
+                        </p>
                         <p className="text-xs text-muted-foreground">{patient.id}</p>
                       </div>
                     </div>
@@ -67,10 +87,16 @@ export default function PatientTable({ patients, selectedId, onSelect }: Props) 
                   </td>
                   <td className="px-4 py-3">
                     <p className="text-xs font-medium text-foreground">{patient.phone}</p>
-                    <p className="text-xs text-muted-foreground truncate max-w-[140px]">{patient.email}</p>
+                    <p className="text-xs text-muted-foreground truncate max-w-[140px]">
+                      {patient.email}
+                    </p>
                   </td>
-                  <td className="px-4 py-3 text-sm text-muted-foreground whitespace-nowrap">{patient.city}</td>
-                  <td className="px-4 py-3 text-sm font-medium text-foreground whitespace-nowrap font-tabular">{patient.lastVisit}</td>
+                  <td className="px-4 py-3 text-sm text-muted-foreground whitespace-nowrap">
+                    {patient.city}
+                  </td>
+                  <td className="px-4 py-3 text-sm font-medium text-foreground whitespace-nowrap font-tabular">
+                    {patient.lastVisit}
+                  </td>
                   <td className="px-4 py-3">
                     <span className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-muted text-xs font-bold text-foreground font-tabular">
                       {patient.visitCount}
@@ -79,7 +105,10 @@ export default function PatientTable({ patients, selectedId, onSelect }: Props) 
                   <td className="px-4 py-3">
                     <div className="flex flex-wrap gap-1 max-w-[160px]">
                       {patient.diagnosisTags.slice(0, 2).map((tag) => (
-                        <span key={`${patient.id}-diag-${tag}`} className="px-2 py-0.5 rounded-full text-xs font-semibold bg-primary/10 text-primary">
+                        <span
+                          key={`${patient.id}-diag-${tag}`}
+                          className="px-2 py-0.5 rounded-full text-xs font-semibold bg-primary/10 text-primary"
+                        >
                           {tag}
                         </span>
                       ))}
@@ -92,22 +121,32 @@ export default function PatientTable({ patients, selectedId, onSelect }: Props) 
                   </td>
                   <td className="px-4 py-3 whitespace-nowrap">
                     {patient.nextAppointment ? (
-                      <span className="text-xs font-semibold text-secondary font-tabular">{patient.nextAppointment}</span>
+                      <span className="text-xs font-semibold text-secondary font-tabular">
+                        {patient.nextAppointment}
+                      </span>
                     ) : (
                       <span className="text-xs text-muted-foreground">—</span>
                     )}
                   </td>
                   <td className="px-4 py-3">
-                    <span className={`status-badge ${patient.status === 'active' ? 'status-confirmed' : 'status-cancelled'}`}>
+                    <span
+                      className={`status-badge ${patient.status === 'active' ? 'status-confirmed' : 'status-cancelled'}`}
+                    >
                       {patient.status}
                     </span>
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex items-center gap-1">
-                      <button title="View patient record" className="p-1.5 rounded-lg hover:bg-muted transition-colors">
+                      <button
+                        title="View patient record"
+                        className="p-1.5 rounded-lg hover:bg-muted transition-colors"
+                      >
                         <Icon name="EyeIcon" size={14} className="text-muted-foreground" />
                       </button>
-                      <button title="Edit patient record" className="p-1.5 rounded-lg hover:bg-muted transition-colors">
+                      <button
+                        title="Edit patient record"
+                        className="p-1.5 rounded-lg hover:bg-muted transition-colors"
+                      >
                         <Icon name="PencilSquareIcon" size={14} className="text-muted-foreground" />
                       </button>
                     </div>
@@ -122,10 +161,15 @@ export default function PatientTable({ patients, selectedId, onSelect }: Props) 
       {totalPages > 1 && (
         <div className="border-t px-4 py-3 flex items-center justify-between bg-muted/10">
           <span className="text-xs text-muted-foreground">
-            {(page - 1) * perPage + 1}–{Math.min(page * perPage, patients.length)} of {patients.length} patients
+            {(page - 1) * perPage + 1}–{Math.min(page * perPage, patients.length)} of{' '}
+            {patients.length} patients
           </span>
           <div className="flex items-center gap-1">
-            <button onClick={() => setPage((p) => Math.max(1, p - 1))} disabled={page === 1} className="p-1.5 rounded-lg hover:bg-muted disabled:opacity-40 transition-colors">
+            <button
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+              disabled={page === 1}
+              className="p-1.5 rounded-lg hover:bg-muted disabled:opacity-40 transition-colors"
+            >
               <Icon name="ChevronLeftIcon" size={14} className="text-muted-foreground" />
             </button>
             {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
@@ -137,7 +181,11 @@ export default function PatientTable({ patients, selectedId, onSelect }: Props) 
                 {p}
               </button>
             ))}
-            <button onClick={() => setPage((p) => Math.min(totalPages, p + 1))} disabled={page === totalPages} className="p-1.5 rounded-lg hover:bg-muted disabled:opacity-40 transition-colors">
+            <button
+              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              disabled={page === totalPages}
+              className="p-1.5 rounded-lg hover:bg-muted disabled:opacity-40 transition-colors"
+            >
               <Icon name="ChevronRightIcon" size={14} className="text-muted-foreground" />
             </button>
           </div>

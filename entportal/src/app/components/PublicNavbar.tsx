@@ -68,10 +68,16 @@ export default function PublicNavbar({ language, onLanguageChange }: PublicNavba
             <div className="flex items-center gap-2 min-w-0">
               <AppLogo size={32} className="flex-shrink-0" />
               <div className="min-w-0">
-                <span className={`font-bold text-sm sm:text-base tracking-tight block leading-tight truncate ${scrolled ? 'text-foreground' : 'text-white'}`}>
+                <span
+                  className={`font-bold text-sm sm:text-base tracking-tight block leading-tight truncate ${scrolled ? 'text-foreground' : 'text-white'}`}
+                >
                   Dr. Krishna Koirala
                 </span>
-                <span className={`text-xs font-medium hidden sm:block ${scrolled ? 'text-muted-foreground' : 'text-white/80'}`}>ENT &amp; Head-Neck Surgeon</span>
+                <span
+                  className={`text-xs font-medium hidden sm:block ${scrolled ? 'text-muted-foreground' : 'text-white/80'}`}
+                >
+                  ENT &amp; Head-Neck Surgeon
+                </span>
               </div>
             </div>
 
@@ -105,14 +111,23 @@ export default function PublicNavbar({ language, onLanguageChange }: PublicNavba
                   }`}
                 >
                   {LANG_SHORT[language]}
-                  <Icon name="ChevronDownIcon" size={12} className={langDropdownOpen ? 'rotate-180 transition-transform' : 'transition-transform'} />
+                  <Icon
+                    name="ChevronDownIcon"
+                    size={12}
+                    className={
+                      langDropdownOpen ? 'rotate-180 transition-transform' : 'transition-transform'
+                    }
+                  />
                 </button>
                 {langDropdownOpen && (
                   <div className="absolute right-0 mt-1.5 w-24 bg-white rounded-lg shadow-lg border border-border overflow-hidden z-50">
                     {SUPPORTED_LANGUAGES.map((lang) => (
                       <button
                         key={lang.code}
-                        onClick={() => { onLanguageChange(lang.code); setLangDropdownOpen(false); }}
+                        onClick={() => {
+                          onLanguageChange(lang.code);
+                          setLangDropdownOpen(false);
+                        }}
                         className={`w-full text-left px-3 py-2 text-xs font-semibold transition-colors hover:bg-muted/60 ${
                           language === lang.code ? 'text-primary bg-muted/40' : 'text-foreground'
                         }`}
@@ -144,15 +159,22 @@ export default function PublicNavbar({ language, onLanguageChange }: PublicNavba
             {/* Mobile Right: Language + Hamburger */}
             <div className="flex items-center gap-2 lg:hidden">
               {/* Mobile Language Toggle */}
-              <div className="flex items-center rounded-lg border overflow-hidden"
-                style={{ borderColor: scrolled ? 'var(--border)' : 'rgba(255,255,255,0.3)' }}>
+              <div
+                className="flex items-center rounded-lg border overflow-hidden"
+                style={{ borderColor: scrolled ? 'var(--border)' : 'rgba(255,255,255,0.3)' }}
+              >
                 {SUPPORTED_LANGUAGES.map((lang) => (
                   <button
                     key={lang.code}
                     onClick={() => onLanguageChange(lang.code)}
                     className={`px-2 py-1 text-xs font-semibold transition-colors ${
                       language === lang.code
-                        ? scrolled ? 'bg-primary text-white' : 'bg-white text-primary' : scrolled ?'text-muted-foreground' : 'text-white/80'
+                        ? scrolled
+                          ? 'bg-primary text-white'
+                          : 'bg-white text-primary'
+                        : scrolled
+                          ? 'text-muted-foreground'
+                          : 'text-white/80'
                     }`}
                   >
                     {LANG_SHORT[lang.code]}
@@ -164,7 +186,11 @@ export default function PublicNavbar({ language, onLanguageChange }: PublicNavba
                 className="p-2 rounded-lg hover:bg-white/10 transition-colors"
                 aria-label="Toggle menu"
               >
-                <Icon name={menuOpen ? 'XMarkIcon' : 'Bars3Icon'} size={22} className={scrolled ? 'text-foreground' : 'text-white'} />
+                <Icon
+                  name={menuOpen ? 'XMarkIcon' : 'Bars3Icon'}
+                  size={22}
+                  className={scrolled ? 'text-foreground' : 'text-white'}
+                />
               </button>
             </div>
           </div>
@@ -178,7 +204,10 @@ export default function PublicNavbar({ language, onLanguageChange }: PublicNavba
           <div className="absolute top-0 right-0 h-full w-72 bg-white animate-slide-in-right shadow-2xl flex flex-col">
             <div className="p-5 border-b flex items-center justify-between flex-shrink-0">
               <span className="font-bold text-foreground">Menu</span>
-              <button onClick={() => setMenuOpen(false)} className="p-1.5 rounded-lg hover:bg-muted transition-colors">
+              <button
+                onClick={() => setMenuOpen(false)}
+                className="p-1.5 rounded-lg hover:bg-muted transition-colors"
+              >
                 <Icon name="XMarkIcon" size={20} className="text-foreground" />
               </button>
             </div>
@@ -194,11 +223,18 @@ export default function PublicNavbar({ language, onLanguageChange }: PublicNavba
                 </a>
               ))}
               <div className="pt-4 border-t mt-4 space-y-3">
-                <a href="tel:061553150" className="flex items-center gap-2 px-4 py-3 text-sm font-semibold text-primary hover:bg-muted rounded-lg transition-colors">
+                <a
+                  href="tel:061553150"
+                  className="flex items-center gap-2 px-4 py-3 text-sm font-semibold text-primary hover:bg-muted rounded-lg transition-colors"
+                >
                   <Icon name="PhoneIcon" size={16} />
                   061-553150
                 </a>
-                <a href="#booking" onClick={() => setMenuOpen(false)} className="btn-primary w-full justify-center">
+                <a
+                  href="#booking"
+                  onClick={() => setMenuOpen(false)}
+                  className="btn-primary w-full justify-center"
+                >
                   {bookLabel}
                 </a>
                 <Link

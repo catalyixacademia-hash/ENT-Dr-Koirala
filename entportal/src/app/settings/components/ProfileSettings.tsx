@@ -22,7 +22,11 @@ interface ProfileFormData {
 export default function ProfileSettings() {
   const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved'>('idle');
 
-  const { register, handleSubmit, formState: { errors, isDirty } } = useForm<ProfileFormData>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isDirty },
+  } = useForm<ProfileFormData>({
     defaultValues: {
       fullName: 'Dr. Krishna Koirala',
       designation: 'Professor & Head of ENT, Senior ENT Consultant',
@@ -36,7 +40,8 @@ export default function ProfileSettings() {
       instagramHandle: '',
       facebookUrl: 'https://www.facebook.com/drkrishnakoirala/',
       yearsExperience: '20',
-      specializations: 'ENT, Head-Neck Surgery, Thyroid Surgery, Sinusitis, Ear Disorders, Pediatric ENT',
+      specializations:
+        'ENT, Head-Neck Surgery, Thyroid Surgery, Sinusitis, Ear Disorders, Pediatric ENT',
     },
   });
 
@@ -60,8 +65,14 @@ export default function ProfileSettings() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <div>
             <label className="label-text">Full Name</label>
-            <input {...register('fullName', { required: 'Required' })} type="text" className="input-field" />
-            {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName.message}</p>}
+            <input
+              {...register('fullName', { required: 'Required' })}
+              type="text"
+              className="input-field"
+            />
+            {errors.fullName && (
+              <p className="text-red-500 text-xs mt-1">{errors.fullName.message}</p>
+            )}
           </div>
           <div>
             <label className="label-text">Designation</label>
@@ -69,7 +80,9 @@ export default function ProfileSettings() {
           </div>
           <div className="sm:col-span-2">
             <label className="label-text">Qualifications</label>
-            <p className="text-xs text-muted-foreground mb-1.5">Degrees, fellowships, and certifications</p>
+            <p className="text-xs text-muted-foreground mb-1.5">
+              Degrees, fellowships, and certifications
+            </p>
             <input {...register('qualifications')} type="text" className="input-field" />
           </div>
           <div>
@@ -82,12 +95,16 @@ export default function ProfileSettings() {
           </div>
           <div className="sm:col-span-2">
             <label className="label-text">Specializations</label>
-            <p className="text-xs text-muted-foreground mb-1.5">Comma-separated list of specialties</p>
+            <p className="text-xs text-muted-foreground mb-1.5">
+              Comma-separated list of specialties
+            </p>
             <input {...register('specializations')} type="text" className="input-field" />
           </div>
           <div className="sm:col-span-2">
             <label className="label-text">Professional Bio</label>
-            <p className="text-xs text-muted-foreground mb-1.5">Shown on public website about section</p>
+            <p className="text-xs text-muted-foreground mb-1.5">
+              Shown on public website about section
+            </p>
             <textarea {...register('bio')} rows={4} className="input-field resize-none" />
           </div>
         </div>
@@ -125,14 +142,18 @@ export default function ProfileSettings() {
           <div>
             <label className="label-text">TikTok Handle</label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-muted-foreground">@</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-muted-foreground">
+                @
+              </span>
               <input {...register('tiktokHandle')} type="text" className="input-field pl-7" />
             </div>
           </div>
           <div>
             <label className="label-text">Instagram Handle</label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-muted-foreground">@</span>
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-bold text-muted-foreground">
+                @
+              </span>
               <input {...register('instagramHandle')} type="text" className="input-field pl-7" />
             </div>
           </div>
@@ -165,12 +186,22 @@ export default function ProfileSettings() {
         )}
         {saveState === 'idle' && !isDirty && <span />}
         <div className="flex items-center gap-3">
-          <button type="button" className="btn-outline text-sm px-4 py-2">Discard</button>
-          <button type="submit" disabled={saveState === 'saving'} className="btn-primary text-sm px-5 py-2">
+          <button type="button" className="btn-outline text-sm px-4 py-2">
+            Discard
+          </button>
+          <button
+            type="submit"
+            disabled={saveState === 'saving'}
+            className="btn-primary text-sm px-5 py-2"
+          >
             {saveState === 'saving' ? (
-              <><Icon name="ArrowPathIcon" size={15} className="animate-spin" /> Saving...</>
+              <>
+                <Icon name="ArrowPathIcon" size={15} className="animate-spin" /> Saving...
+              </>
             ) : (
-              <><Icon name="CheckIcon" size={15} /> Save Profile</>
+              <>
+                <Icon name="CheckIcon" size={15} /> Save Profile
+              </>
             )}
           </button>
         </div>

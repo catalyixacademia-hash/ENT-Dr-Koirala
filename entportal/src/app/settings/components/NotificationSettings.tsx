@@ -11,13 +11,55 @@ interface NotifToggle {
 }
 
 const DEFAULT_NOTIFS: NotifToggle[] = [
-  { id: 'notif-new-booking', label: 'New Booking Alert', description: 'Get notified instantly when a patient submits a new appointment request', enabled: true, channel: 'both' },
-  { id: 'notif-confirm', label: 'Appointment Confirmed', description: 'Receive confirmation when an appointment is confirmed in the system', enabled: true, channel: 'email' },
-  { id: 'notif-cancel', label: 'Appointment Cancelled', description: 'Alert when a patient cancels their appointment', enabled: true, channel: 'both' },
-  { id: 'notif-reminder', label: 'Daily Schedule Reminder', description: 'Morning summary of today\'s appointments at 8:00 AM', enabled: true, channel: 'email' },
-  { id: 'notif-patient-new', label: 'New Patient Registration', description: 'Notification when a new patient record is created', enabled: false, channel: 'email' },
-  { id: 'notif-review', label: 'New Patient Review', description: 'Alert when a patient leaves a review on Google or social media', enabled: true, channel: 'email' },
-  { id: 'notif-weekly', label: 'Weekly Analytics Report', description: 'Weekly summary of bookings, new patients, and website traffic', enabled: true, channel: 'email' },
+  {
+    id: 'notif-new-booking',
+    label: 'New Booking Alert',
+    description: 'Get notified instantly when a patient submits a new appointment request',
+    enabled: true,
+    channel: 'both',
+  },
+  {
+    id: 'notif-confirm',
+    label: 'Appointment Confirmed',
+    description: 'Receive confirmation when an appointment is confirmed in the system',
+    enabled: true,
+    channel: 'email',
+  },
+  {
+    id: 'notif-cancel',
+    label: 'Appointment Cancelled',
+    description: 'Alert when a patient cancels their appointment',
+    enabled: true,
+    channel: 'both',
+  },
+  {
+    id: 'notif-reminder',
+    label: 'Daily Schedule Reminder',
+    description: "Morning summary of today's appointments at 8:00 AM",
+    enabled: true,
+    channel: 'email',
+  },
+  {
+    id: 'notif-patient-new',
+    label: 'New Patient Registration',
+    description: 'Notification when a new patient record is created',
+    enabled: false,
+    channel: 'email',
+  },
+  {
+    id: 'notif-review',
+    label: 'New Patient Review',
+    description: 'Alert when a patient leaves a review on Google or social media',
+    enabled: true,
+    channel: 'email',
+  },
+  {
+    id: 'notif-weekly',
+    label: 'Weekly Analytics Report',
+    description: 'Weekly summary of bookings, new patients, and website traffic',
+    enabled: true,
+    channel: 'email',
+  },
 ];
 
 export default function NotificationSettings() {
@@ -25,7 +67,7 @@ export default function NotificationSettings() {
   const [saved, setSaved] = useState(false);
 
   const toggle = (id: string) => {
-    setNotifs((prev) => prev.map((n) => n.id === id ? { ...n, enabled: !n.enabled } : n));
+    setNotifs((prev) => prev.map((n) => (n.id === id ? { ...n, enabled: !n.enabled } : n)));
   };
 
   const handleSave = async () => {
@@ -42,7 +84,9 @@ export default function NotificationSettings() {
           <Icon name="BellIcon" size={18} className="text-primary" />
           Notification Preferences
         </h2>
-        <p className="text-xs text-muted-foreground mb-6">Choose how and when you receive alerts about your practice</p>
+        <p className="text-xs text-muted-foreground mb-6">
+          Choose how and when you receive alerts about your practice
+        </p>
 
         <div className="space-y-3">
           {notifs.map((notif) => (
@@ -53,11 +97,20 @@ export default function NotificationSettings() {
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 mb-0.5">
                   <p className="text-sm font-semibold text-foreground">{notif.label}</p>
-                  <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
-                    notif.channel === 'both' ? 'bg-primary/10 text-primary' :
-                    notif.channel === 'email'? 'bg-blue-50 text-blue-600' : 'bg-green-50 text-green-600'
-                  }`}>
-                    {notif.channel === 'both' ? 'Email + SMS' : notif.channel === 'email' ? 'Email' : 'SMS'}
+                  <span
+                    className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
+                      notif.channel === 'both'
+                        ? 'bg-primary/10 text-primary'
+                        : notif.channel === 'email'
+                          ? 'bg-blue-50 text-blue-600'
+                          : 'bg-green-50 text-green-600'
+                    }`}
+                  >
+                    {notif.channel === 'both'
+                      ? 'Email + SMS'
+                      : notif.channel === 'email'
+                        ? 'Email'
+                        : 'SMS'}
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">{notif.description}</p>

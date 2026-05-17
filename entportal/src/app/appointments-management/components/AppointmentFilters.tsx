@@ -4,8 +4,12 @@ import Icon from '@/components/ui/AppIcon';
 import type { FilterState } from './AppointmentsManager';
 
 const SERVICE_TYPES = [
-  'Ear Disorders', 'Nose & Sinus', 'Throat & Voice',
-  'Pediatric ENT', 'Allergy & Immunology', 'Hearing Solutions',
+  'Ear Disorders',
+  'Nose & Sinus',
+  'Throat & Voice',
+  'Pediatric ENT',
+  'Allergy & Immunology',
+  'Hearing Solutions',
 ];
 
 interface Props {
@@ -14,8 +18,7 @@ interface Props {
 }
 
 export default function AppointmentFilters({ filters, onChange }: Props) {
-  const update = (key: keyof FilterState, value: string) =>
-    onChange({ ...filters, [key]: value });
+  const update = (key: keyof FilterState, value: string) => onChange({ ...filters, [key]: value });
 
   const hasActive = Object.values(filters).some((v) => v !== '');
 
@@ -24,7 +27,11 @@ export default function AppointmentFilters({ filters, onChange }: Props) {
       <div className="flex flex-wrap gap-3 items-center">
         {/* Search */}
         <div className="relative flex-1 min-w-48">
-          <Icon name="MagnifyingGlassIcon" size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+          <Icon
+            name="MagnifyingGlassIcon"
+            size={15}
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+          />
           <input
             type="text"
             placeholder="Search by patient name, phone, or reason..."
@@ -55,7 +62,9 @@ export default function AppointmentFilters({ filters, onChange }: Props) {
         >
           <option value="">All Services</option>
           {SERVICE_TYPES.map((s) => (
-            <option key={`svc-opt-${s}`} value={s}>{s}</option>
+            <option key={`svc-opt-${s}`} value={s}>
+              {s}
+            </option>
           ))}
         </select>
 
@@ -77,7 +86,9 @@ export default function AppointmentFilters({ filters, onChange }: Props) {
 
         {hasActive && (
           <button
-            onClick={() => onChange({ search: '', status: '', serviceType: '', dateFrom: '', dateTo: '' })}
+            onClick={() =>
+              onChange({ search: '', status: '', serviceType: '', dateFrom: '', dateTo: '' })
+            }
             className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl text-sm font-semibold text-red-500 hover:bg-red-50 transition-colors border border-red-200"
           >
             <Icon name="XMarkIcon" size={14} />

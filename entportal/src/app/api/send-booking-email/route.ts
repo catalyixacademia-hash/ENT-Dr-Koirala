@@ -13,7 +13,12 @@ export async function POST(req: NextRequest) {
     const { fullName, phone, email, preferredDate, preferredTime, reason, message } = body;
 
     const formattedDate = preferredDate
-      ? new Date(preferredDate).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
+      ? new Date(preferredDate).toLocaleDateString('en-US', {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        })
       : preferredDate;
 
     // Patient confirmation email

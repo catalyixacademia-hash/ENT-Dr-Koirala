@@ -23,7 +23,11 @@ interface FormData {
 }
 
 export default function AddPatientModal({ onClose, onAdd }: Props) {
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<FormData>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormData>();
 
   const onSubmit = async (data: FormData) => {
     // BACKEND INTEGRATION: POST /api/patients with patient data
@@ -65,44 +69,86 @@ export default function AddPatientModal({ onClose, onAdd }: Props) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div className="sm:col-span-2">
                 <label className="label-text">Full Name *</label>
-                <input {...register('name', { required: 'Name is required' })} type="text" placeholder="Rajesh Kumar" className="input-field" />
+                <input
+                  {...register('name', { required: 'Name is required' })}
+                  type="text"
+                  placeholder="Rajesh Kumar"
+                  className="input-field"
+                />
                 {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name.message}</p>}
               </div>
               <div>
                 <label className="label-text">Age *</label>
-                <input {...register('age', { required: 'Age is required', min: { value: 0, message: 'Invalid age' }, max: { value: 120, message: 'Invalid age' } })} type="number" placeholder="35" className="input-field" />
+                <input
+                  {...register('age', {
+                    required: 'Age is required',
+                    min: { value: 0, message: 'Invalid age' },
+                    max: { value: 120, message: 'Invalid age' },
+                  })}
+                  type="number"
+                  placeholder="35"
+                  className="input-field"
+                />
                 {errors.age && <p className="text-red-500 text-xs mt-1">{errors.age.message}</p>}
               </div>
               <div>
                 <label className="label-text">Gender *</label>
-                <select {...register('gender', { required: 'Gender is required' })} className="input-field">
+                <select
+                  {...register('gender', { required: 'Gender is required' })}
+                  className="input-field"
+                >
                   <option value="">Select gender</option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
                   <option value="Other">Other</option>
                 </select>
-                {errors.gender && <p className="text-red-500 text-xs mt-1">{errors.gender.message}</p>}
+                {errors.gender && (
+                  <p className="text-red-500 text-xs mt-1">{errors.gender.message}</p>
+                )}
               </div>
               <div>
                 <label className="label-text">Phone Number *</label>
-                <input {...register('phone', { required: 'Phone is required' })} type="tel" placeholder="+91 98765 43210" className="input-field" />
-                {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
+                <input
+                  {...register('phone', { required: 'Phone is required' })}
+                  type="tel"
+                  placeholder="+91 98765 43210"
+                  className="input-field"
+                />
+                {errors.phone && (
+                  <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>
+                )}
               </div>
               <div>
                 <label className="label-text">Email Address</label>
-                <input {...register('email', { pattern: { value: /^\S+@\S+\.\S+$/, message: 'Invalid email' } })} type="email" placeholder="patient@email.com" className="input-field" />
-                {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>}
+                <input
+                  {...register('email', {
+                    pattern: { value: /^\S+@\S+\.\S+$/, message: 'Invalid email' },
+                  })}
+                  type="email"
+                  placeholder="patient@email.com"
+                  className="input-field"
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+                )}
               </div>
               <div>
                 <label className="label-text">City</label>
-                <input {...register('city')} type="text" placeholder="Pokhara" className="input-field" />
+                <input
+                  {...register('city')}
+                  type="text"
+                  placeholder="Pokhara"
+                  className="input-field"
+                />
               </div>
               <div>
                 <label className="label-text">Blood Group</label>
                 <select {...register('bloodGroup')} className="input-field">
                   <option value="">Select blood group</option>
                   {['A+', 'A-', 'B+', 'B-', 'O+', 'O-', 'AB+', 'AB-'].map((bg) => (
-                    <option key={`bg-${bg}`} value={bg}>{bg}</option>
+                    <option key={`bg-${bg}`} value={bg}>
+                      {bg}
+                    </option>
                   ))}
                 </select>
               </div>
@@ -110,19 +156,38 @@ export default function AddPatientModal({ onClose, onAdd }: Props) {
 
             <div>
               <label className="label-text">Diagnosis Tags</label>
-              <p className="text-xs text-muted-foreground mb-1.5">Separate multiple diagnoses with commas</p>
-              <input {...register('diagnosisTags')} type="text" placeholder="Sinusitis, Nasal Polyps, Tinnitus" className="input-field" />
+              <p className="text-xs text-muted-foreground mb-1.5">
+                Separate multiple diagnoses with commas
+              </p>
+              <input
+                {...register('diagnosisTags')}
+                type="text"
+                placeholder="Sinusitis, Nasal Polyps, Tinnitus"
+                className="input-field"
+              />
             </div>
 
             <div>
               <label className="label-text">Known Allergies</label>
-              <p className="text-xs text-muted-foreground mb-1.5">Separate multiple allergies with commas</p>
-              <input {...register('allergies')} type="text" placeholder="Penicillin, Dust Mites, Pollen" className="input-field" />
+              <p className="text-xs text-muted-foreground mb-1.5">
+                Separate multiple allergies with commas
+              </p>
+              <input
+                {...register('allergies')}
+                type="text"
+                placeholder="Penicillin, Dust Mites, Pollen"
+                className="input-field"
+              />
             </div>
 
             <div>
               <label className="label-text">Clinical Notes</label>
-              <textarea {...register('notes')} rows={3} placeholder="Initial assessment notes, symptoms, referral source..." className="input-field resize-none" />
+              <textarea
+                {...register('notes')}
+                rows={3}
+                placeholder="Initial assessment notes, symptoms, referral source..."
+                className="input-field resize-none"
+              />
             </div>
           </div>
 
@@ -130,7 +195,11 @@ export default function AddPatientModal({ onClose, onAdd }: Props) {
             <button type="button" onClick={onClose} className="btn-outline text-sm px-5 py-2.5">
               Cancel
             </button>
-            <button type="submit" disabled={isSubmitting} className="btn-primary text-sm px-5 py-2.5">
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className="btn-primary text-sm px-5 py-2.5"
+            >
               {isSubmitting ? (
                 <>
                   <Icon name="ArrowPathIcon" size={15} className="animate-spin" />

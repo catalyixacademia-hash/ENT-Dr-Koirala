@@ -24,11 +24,13 @@ export default function AdminLayout({ children, currentPath }: AdminLayoutProps)
         )}
 
         {/* Sidebar — hidden on mobile unless open */}
-        <div className={`
+        <div
+          className={`
           fixed inset-y-0 left-0 z-50 lg:relative lg:z-auto lg:flex
           transition-transform duration-300 ease-in-out
           ${mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}
-        `}>
+        `}
+        >
           <AdminSidebar currentPath={currentPath} onClose={() => setMobileSidebarOpen(false)} />
         </div>
 

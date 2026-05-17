@@ -3,29 +3,29 @@
 @tailwind utilities;
 
 :root {
-  --background: #F8FAFC;
-  --foreground: #0F172A;
-  --primary: #0F766E;
-  --primary-foreground: #FFFFFF;
-  --secondary: #10B981;
-  --secondary-foreground: #FFFFFF;
-  --accent: #14B8A6;
-  --accent-foreground: #FFFFFF;
-  --muted: #F1F5F9;
-  --muted-foreground: #64748B;
-  --card: #FFFFFF;
-  --card-foreground: #0F172A;
-  --border: #E2E8F0;
-  --input: #E2E8F0;
-  --ring: #14B8A6;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --primary: #0f766e;
+  --primary-foreground: #ffffff;
+  --secondary: #10b981;
+  --secondary-foreground: #ffffff;
+  --accent: #14b8a6;
+  --accent-foreground: #ffffff;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #14b8a6;
   --radius: 12px;
   --font-sans: var(--font-plus-jakarta-sans), sans-serif;
 
   /* Admin sidebar */
-  --sidebar-bg: #0F172A;
-  --sidebar-text: #CBD5E1;
-  --sidebar-active: #14B8A6;
-  --sidebar-hover: #1E293B;
+  --sidebar-bg: #0f172a;
+  --sidebar-text: #cbd5e1;
+  --sidebar-active: #14b8a6;
+  --sidebar-hover: #1e293b;
 }
 
 @layer base {
@@ -42,7 +42,13 @@
   html {
     scroll-behavior: smooth;
   }
-  h1, h2, h3, h4, h5, h6, p {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
     margin: 0;
   }
 }
@@ -55,25 +61,31 @@
     font-variant-numeric: tabular-nums;
   }
   .gradient-primary {
-    background: linear-gradient(135deg, #0F766E 0%, #14B8A6 100%);
+    background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
   }
   .gradient-hero {
-    background: linear-gradient(135deg, #0F766E 0%, #0E7490 50%, #14B8A6 100%);
+    background: linear-gradient(135deg, #0f766e 0%, #0e7490 50%, #14b8a6 100%);
   }
   .text-gradient {
-    background: linear-gradient(135deg, #0F766E 0%, #14B8A6 100%);
+    background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
   .card-shadow {
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,0.06), 0 1px 2px -1px rgba(0,0,0,0.06);
+    box-shadow:
+      0 1px 3px 0 rgba(0, 0, 0, 0.06),
+      0 1px 2px -1px rgba(0, 0, 0, 0.06);
   }
   .card-shadow-md {
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.07);
+    box-shadow:
+      0 4px 6px -1px rgba(0, 0, 0, 0.07),
+      0 2px 4px -2px rgba(0, 0, 0, 0.07);
   }
   .card-shadow-lg {
-    box-shadow: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.08);
+    box-shadow:
+      0 10px 15px -3px rgba(0, 0, 0, 0.08),
+      0 4px 6px -4px rgba(0, 0, 0, 0.08);
   }
   .section-padding {
     padding-top: 96px;
@@ -105,22 +117,38 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(16px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 @keyframes slideInRight {
-  from { opacity: 0; transform: translateX(24px); }
-  to { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 @layer components {
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-white transition-all duration-200 active:scale-95;
-    background: linear-gradient(135deg, #0F766E 0%, #14B8A6 100%);
+    background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
   }
   .btn-primary:hover {
     box-shadow: 0 8px 20px rgba(15, 118, 110, 0.35);
@@ -159,7 +187,7 @@
   }
   .admin-sidebar-link:hover {
     background-color: var(--sidebar-hover);
-    color: #F8FAFC;
+    color: #f8fafc;
   }
   .admin-sidebar-link.active {
     background-color: rgba(20, 184, 166, 0.15);
@@ -169,19 +197,19 @@
     @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold;
   }
   .status-pending {
-    background-color: #FEF3C7;
-    color: #92400E;
+    background-color: #fef3c7;
+    color: #92400e;
   }
   .status-confirmed {
-    background-color: #D1FAE5;
-    color: #065F46;
+    background-color: #d1fae5;
+    color: #065f46;
   }
   .status-completed {
-    background-color: #DBEAFE;
-    color: #1E40AF;
+    background-color: #dbeafe;
+    color: #1e40af;
   }
   .status-cancelled {
-    background-color: #FEE2E2;
-    color: #991B1B;
+    background-color: #fee2e2;
+    color: #991b1b;
   }
 }

@@ -18,9 +18,25 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { id: 'nav-dashboard', labelKey: 'admin_nav_dashboard', icon: 'HomeIcon', href: '/admin-dashboard-home' },
-  { id: 'nav-appointments', labelKey: 'admin_nav_appointments', icon: 'CalendarDaysIcon', href: '/appointments-management', badge: 4 },
-  { id: 'nav-patients', labelKey: 'admin_nav_patients', icon: 'UserGroupIcon', href: '/patient-records-crm' },
+  {
+    id: 'nav-dashboard',
+    labelKey: 'admin_nav_dashboard',
+    icon: 'HomeIcon',
+    href: '/admin-dashboard-home',
+  },
+  {
+    id: 'nav-appointments',
+    labelKey: 'admin_nav_appointments',
+    icon: 'CalendarDaysIcon',
+    href: '/appointments-management',
+    badge: 4,
+  },
+  {
+    id: 'nav-patients',
+    labelKey: 'admin_nav_patients',
+    icon: 'UserGroupIcon',
+    href: '/patient-records-crm',
+  },
   { id: 'nav-settings', labelKey: 'admin_nav_settings', icon: 'Cog6ToothIcon', href: '/settings' },
 ];
 
@@ -114,7 +130,8 @@ export default function AdminSidebar({ currentPath, onClose }: AdminSidebarProps
           </p>
         )}
         {NAV_ITEMS.map((item) => {
-          const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+          const isActive =
+            currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
           const label = t[item.labelKey as keyof typeof t] as string;
           return (
             <Link
@@ -129,8 +146,13 @@ export default function AdminSidebar({ currentPath, onClose }: AdminSidebarProps
                 <>
                   <span className="flex-1">{label}</span>
                   {item.badge !== undefined && (
-                    <span className="ml-auto inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold"
-                      style={{ backgroundColor: 'rgba(20,184,166,0.2)', color: 'var(--sidebar-active)' }}>
+                    <span
+                      className="ml-auto inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold"
+                      style={{
+                        backgroundColor: 'rgba(20,184,166,0.2)',
+                        color: 'var(--sidebar-active)',
+                      }}
+                    >
                       {item.badge}
                     </span>
                   )}
@@ -166,7 +188,9 @@ export default function AdminSidebar({ currentPath, onClose }: AdminSidebarProps
 
       {/* User Footer */}
       <div className="px-2 py-3 border-t border-white/10">
-        <div className={`flex items-center gap-3 px-3 py-2 rounded-lg ${collapsed ? 'justify-center' : ''}`}>
+        <div
+          className={`flex items-center gap-3 px-3 py-2 rounded-lg ${collapsed ? 'justify-center' : ''}`}
+        >
           <div className="w-8 h-8 rounded-full gradient-primary flex items-center justify-center flex-shrink-0">
             <span className="text-white text-xs font-bold">KK</span>
           </div>

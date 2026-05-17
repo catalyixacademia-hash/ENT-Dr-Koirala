@@ -9,7 +9,11 @@ interface Props {
   onUpdateStatus: (id: string, status: AppointmentStatus) => void;
 }
 
-export default function AppointmentDetailModal({ appointment: appt, onClose, onUpdateStatus }: Props) {
+export default function AppointmentDetailModal({
+  appointment: appt,
+  onClose,
+  onUpdateStatus,
+}: Props) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fade-in">
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
@@ -28,7 +32,11 @@ export default function AppointmentDetailModal({ appointment: appt, onClose, onU
           <div className="flex items-center gap-4 p-4 bg-muted/30 rounded-2xl">
             <div className="w-12 h-12 rounded-xl gradient-primary flex items-center justify-center flex-shrink-0">
               <span className="text-white font-bold">
-                {appt.patientName.split(' ').map((n) => n[0]).join('').slice(0, 2)}
+                {appt.patientName
+                  .split(' ')
+                  .map((n) => n[0])
+                  .join('')
+                  .slice(0, 2)}
               </span>
             </div>
             <div>
@@ -37,7 +45,9 @@ export default function AppointmentDetailModal({ appointment: appt, onClose, onU
               <p className="text-sm text-muted-foreground">{appt.email}</p>
             </div>
             {appt.isNew && (
-              <span className="ml-auto px-2.5 py-1 rounded-full text-xs font-bold bg-accent/10 text-accent">NEW PATIENT</span>
+              <span className="ml-auto px-2.5 py-1 rounded-full text-xs font-bold bg-accent/10 text-accent">
+                NEW PATIENT
+              </span>
             )}
           </div>
 
@@ -50,7 +60,11 @@ export default function AppointmentDetailModal({ appointment: appt, onClose, onU
               { id: 'di-service', icon: 'BeakerIcon', label: 'Service', value: appt.serviceType },
             ].map((item) => (
               <div key={item.id} className="flex items-start gap-3 p-3 bg-muted/20 rounded-xl">
-                <Icon name={item.icon as Parameters<typeof Icon>[0]['name']} size={16} className="text-primary mt-0.5 flex-shrink-0" />
+                <Icon
+                  name={item.icon as Parameters<typeof Icon>[0]['name']}
+                  size={16}
+                  className="text-primary mt-0.5 flex-shrink-0"
+                />
                 <div>
                   <p className="text-xs text-muted-foreground font-medium">{item.label}</p>
                   <p className="text-sm font-semibold text-foreground">{item.value}</p>
@@ -73,20 +87,25 @@ export default function AppointmentDetailModal({ appointment: appt, onClose, onU
 
           {/* Status Change */}
           <div>
-            <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2">Update Status</p>
+            <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-2">
+              Update Status
+            </p>
             <div className="flex flex-wrap gap-2">
-              {(['pending', 'confirmed', 'completed', 'cancelled'] as AppointmentStatus[]).map((s) => (
-                <button
-                  key={`modal-status-${s}`}
-                  onClick={() => onUpdateStatus(appt.id, s)}
-                  className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
-                    appt.status === s
-                      ? 'gradient-primary text-white border-transparent' :'bg-white text-muted-foreground border-border hover:border-primary hover:text-primary'
-                  }`}
-                >
-                  {s.charAt(0).toUpperCase() + s.slice(1)}
-                </button>
-              ))}
+              {(['pending', 'confirmed', 'completed', 'cancelled'] as AppointmentStatus[]).map(
+                (s) => (
+                  <button
+                    key={`modal-status-${s}`}
+                    onClick={() => onUpdateStatus(appt.id, s)}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold border transition-all ${
+                      appt.status === s
+                        ? 'gradient-primary text-white border-transparent'
+                        : 'bg-white text-muted-foreground border-border hover:border-primary hover:text-primary'
+                    }`}
+                  >
+                    {s.charAt(0).toUpperCase() + s.slice(1)}
+                  </button>
+                )
+              )}
             </div>
           </div>
         </div>

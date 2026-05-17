@@ -17,9 +17,18 @@ interface AppointmentDetails {
 function generateICSContent(details: AppointmentDetails): string {
   const dateStr = details.preferredDate.replace(/-/g, '');
   const timeMap: Record<string, string> = {
-    '9:00 AM': '090000', '9:30 AM': '093000', '10:00 AM': '100000', '10:30 AM': '103000',
-    '11:00 AM': '110000', '11:30 AM': '113000', '2:00 PM': '140000', '2:30 PM': '143000',
-    '3:00 PM': '150000', '3:30 PM': '153000', '4:00 PM': '160000', '4:30 PM': '163000',
+    '9:00 AM': '090000',
+    '9:30 AM': '093000',
+    '10:00 AM': '100000',
+    '10:30 AM': '103000',
+    '11:00 AM': '110000',
+    '11:30 AM': '113000',
+    '2:00 PM': '140000',
+    '2:30 PM': '143000',
+    '3:00 PM': '150000',
+    '3:30 PM': '153000',
+    '4:00 PM': '160000',
+    '4:30 PM': '163000',
   };
   const startTime = timeMap[details.preferredTime] || '090000';
   const endHour = parseInt(startTime.substring(0, 2)) + 1;
@@ -86,7 +95,10 @@ function ConfirmationContent() {
   const formatDate = (dateStr: string) => {
     if (!dateStr) return dateStr;
     return new Date(dateStr + 'T00:00:00').toLocaleDateString('en-US', {
-      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
     });
   };
 
@@ -161,9 +173,10 @@ function ConfirmationContent() {
             Appointment Request Sent!
           </h1>
           <p className="text-muted-foreground text-sm sm:text-base max-w-lg mx-auto leading-relaxed">
-            Thank you, <strong className="text-foreground">{details.fullName}</strong>! Your appointment request has been received.
-            {details.email && ' A confirmation email has been sent to your inbox.'}
-            {' '}We'll confirm within <strong className="text-primary">2 hours</strong>.
+            Thank you, <strong className="text-foreground">{details.fullName}</strong>! Your
+            appointment request has been received.
+            {details.email && ' A confirmation email has been sent to your inbox.'} We'll confirm
+            within <strong className="text-primary">2 hours</strong>.
           </p>
         </div>
 
@@ -182,22 +195,50 @@ function ConfirmationContent() {
                   {[
                     { label: 'Patient Name', value: details.fullName, icon: 'UserIcon' },
                     { label: 'Phone Number', value: details.phone, icon: 'PhoneIcon' },
-                    { label: 'Preferred Date', value: formatDate(details.preferredDate), icon: 'CalendarIcon' },
+                    {
+                      label: 'Preferred Date',
+                      value: formatDate(details.preferredDate),
+                      icon: 'CalendarIcon',
+                    },
                     { label: 'Preferred Time', value: details.preferredTime, icon: 'ClockIcon' },
-                    { label: 'Reason for Visit', value: details.reason, icon: 'ClipboardDocumentListIcon', full: true },
-                    ...(details.email ? [{ label: 'Email', value: details.email, icon: 'EnvelopeIcon', full: true }] : []),
-                    ...(details.message ? [{ label: 'Additional Notes', value: details.message, icon: 'ChatBubbleLeftIcon', full: true }] : []),
+                    {
+                      label: 'Reason for Visit',
+                      value: details.reason,
+                      icon: 'ClipboardDocumentListIcon',
+                      full: true,
+                    },
+                    ...(details.email
+                      ? [{ label: 'Email', value: details.email, icon: 'EnvelopeIcon', full: true }]
+                      : []),
+                    ...(details.message
+                      ? [
+                          {
+                            label: 'Additional Notes',
+                            value: details.message,
+                            icon: 'ChatBubbleLeftIcon',
+                            full: true,
+                          },
+                        ]
+                      : []),
                   ].map((item, idx) => (
                     <div
                       key={idx}
                       className={`flex items-start gap-3 p-3 rounded-xl bg-slate-50 border border-slate-100 ${(item as { full?: boolean }).full ? 'sm:col-span-2' : ''}`}
                     >
                       <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <Icon name={item.icon as Parameters<typeof Icon>[0]['name']} size={15} className="text-primary" />
+                        <Icon
+                          name={item.icon as Parameters<typeof Icon>[0]['name']}
+                          size={15}
+                          className="text-primary"
+                        />
                       </div>
                       <div className="min-w-0">
-                        <p className="text-xs text-muted-foreground font-medium mb-0.5">{item.label}</p>
-                        <p className="text-sm font-semibold text-foreground break-words">{item.value}</p>
+                        <p className="text-xs text-muted-foreground font-medium mb-0.5">
+                          {item.label}
+                        </p>
+                        <p className="text-sm font-semibold text-foreground break-words">
+                          {item.value}
+                        </p>
                       </div>
                     </div>
                   ))}
@@ -215,9 +256,18 @@ function ConfirmationContent() {
               </div>
               <div className="p-6 space-y-3">
                 {NEXT_STEPS.map((step, idx) => (
-                  <div key={idx} className={`flex items-start gap-4 p-4 rounded-xl border ${step.color}`}>
-                    <div className={`w-9 h-9 rounded-xl ${step.iconBg} flex items-center justify-center flex-shrink-0`}>
-                      <Icon name={step.icon as Parameters<typeof Icon>[0]['name']} size={18} className={step.iconColor} />
+                  <div
+                    key={idx}
+                    className={`flex items-start gap-4 p-4 rounded-xl border ${step.color}`}
+                  >
+                    <div
+                      className={`w-9 h-9 rounded-xl ${step.iconBg} flex items-center justify-center flex-shrink-0`}
+                    >
+                      <Icon
+                        name={step.icon as Parameters<typeof Icon>[0]['name']}
+                        size={18}
+                        className={step.iconColor}
+                      />
                     </div>
                     <div>
                       <p className="font-semibold text-sm text-foreground mb-0.5">{step.title}</p>
@@ -247,7 +297,9 @@ function ConfirmationContent() {
                 <Icon name="ArrowDownTrayIcon" size={16} />
                 Download .ics File
               </button>
-              <p className="text-xs text-muted-foreground text-center mt-2">Works with Google, Apple & Outlook Calendar</p>
+              <p className="text-xs text-muted-foreground text-center mt-2">
+                Works with Google, Apple & Outlook Calendar
+              </p>
             </div>
 
             {/* Clinic Info */}
@@ -259,11 +311,15 @@ function ConfirmationContent() {
               <div className="space-y-3">
                 <div>
                   <p className="text-xs text-muted-foreground font-medium">Address</p>
-                  <p className="text-xs text-foreground font-semibold leading-relaxed">Nayabazar ENT Care Center, Nayabazar, Pokhara, Nepal</p>
+                  <p className="text-xs text-foreground font-semibold leading-relaxed">
+                    Nayabazar ENT Care Center, Nayabazar, Pokhara, Nepal
+                  </p>
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground font-medium">Hours</p>
-                  <p className="text-xs text-foreground font-semibold">Mon–Sat: 9:00 AM – 1:00 PM</p>
+                  <p className="text-xs text-foreground font-semibold">
+                    Mon–Sat: 9:00 AM – 1:00 PM
+                  </p>
                   <p className="text-xs text-foreground font-semibold">5:00 PM – 8:00 PM</p>
                 </div>
                 <div>
@@ -274,7 +330,11 @@ function ConfirmationContent() {
                   >
                     <Icon name="PhoneIcon" size={13} />
                     061-553150
-                    {copied ? <Icon name="CheckIcon" size={13} className="text-green-500" /> : <Icon name="ClipboardDocumentIcon" size={13} />}
+                    {copied ? (
+                      <Icon name="CheckIcon" size={13} className="text-green-500" />
+                    ) : (
+                      <Icon name="ClipboardDocumentIcon" size={13} />
+                    )}
                   </button>
                 </div>
               </div>
@@ -284,7 +344,9 @@ function ConfirmationContent() {
             <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
-                <p className="text-xs font-bold text-amber-800 uppercase tracking-wide">Status: Pending Confirmation</p>
+                <p className="text-xs font-bold text-amber-800 uppercase tracking-wide">
+                  Status: Pending Confirmation
+                </p>
               </div>
               <p className="text-xs text-amber-700 leading-relaxed">
                 Your appointment is pending confirmation. Our team will contact you within 2 hours.
@@ -308,11 +370,13 @@ function ConfirmationContent() {
 
 export default function BookingConfirmationPage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen flex items-center justify-center bg-muted/30">
-        <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-      </div>
-    }>
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-muted/30">
+          <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+        </div>
+      }
+    >
       <ConfirmationContent />
     </Suspense>
   );

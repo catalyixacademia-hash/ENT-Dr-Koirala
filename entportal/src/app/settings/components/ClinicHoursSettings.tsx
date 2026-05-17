@@ -11,12 +11,36 @@ interface DaySchedule {
 }
 
 const DEFAULT_HOURS: Record<string, DaySchedule> = {
-  Monday: { isOpen: true, morning: { from: '09:00', to: '13:00' }, evening: { from: '17:00', to: '20:00' } },
-  Tuesday: { isOpen: true, morning: { from: '09:00', to: '13:00' }, evening: { from: '17:00', to: '20:00' } },
-  Wednesday: { isOpen: true, morning: { from: '09:00', to: '13:00' }, evening: { from: '17:00', to: '20:00' } },
-  Thursday: { isOpen: true, morning: { from: '09:00', to: '13:00' }, evening: { from: '17:00', to: '20:00' } },
-  Friday: { isOpen: true, morning: { from: '09:00', to: '13:00' }, evening: { from: '17:00', to: '20:00' } },
-  Saturday: { isOpen: true, morning: { from: '09:00', to: '13:00' }, evening: { from: '17:00', to: '19:00' } },
+  Monday: {
+    isOpen: true,
+    morning: { from: '09:00', to: '13:00' },
+    evening: { from: '17:00', to: '20:00' },
+  },
+  Tuesday: {
+    isOpen: true,
+    morning: { from: '09:00', to: '13:00' },
+    evening: { from: '17:00', to: '20:00' },
+  },
+  Wednesday: {
+    isOpen: true,
+    morning: { from: '09:00', to: '13:00' },
+    evening: { from: '17:00', to: '20:00' },
+  },
+  Thursday: {
+    isOpen: true,
+    morning: { from: '09:00', to: '13:00' },
+    evening: { from: '17:00', to: '20:00' },
+  },
+  Friday: {
+    isOpen: true,
+    morning: { from: '09:00', to: '13:00' },
+    evening: { from: '17:00', to: '20:00' },
+  },
+  Saturday: {
+    isOpen: true,
+    morning: { from: '09:00', to: '13:00' },
+    evening: { from: '17:00', to: '19:00' },
+  },
   Sunday: { isOpen: false, morning: { from: '', to: '' }, evening: { from: '', to: '' } },
 };
 
@@ -31,7 +55,12 @@ export default function ClinicHoursSettings() {
     }));
   };
 
-  const updateTime = (day: string, session: 'morning' | 'evening', field: 'from' | 'to', value: string) => {
+  const updateTime = (
+    day: string,
+    session: 'morning' | 'evening',
+    field: 'from' | 'to',
+    value: string
+  ) => {
     setHours((prev) => ({
       ...prev,
       [day]: { ...prev[day], [session]: { ...prev[day][session], [field]: value } },
@@ -52,7 +81,9 @@ export default function ClinicHoursSettings() {
           <Icon name="ClockIcon" size={18} className="text-primary" />
           Clinic Hours
         </h2>
-        <p className="text-sm text-muted-foreground mb-6">Set your weekly schedule. These hours will be shown on the public website.</p>
+        <p className="text-sm text-muted-foreground mb-6">
+          Set your weekly schedule. These hours will be shown on the public website.
+        </p>
 
         <div className="space-y-3">
           {DAYS.map((day) => {
