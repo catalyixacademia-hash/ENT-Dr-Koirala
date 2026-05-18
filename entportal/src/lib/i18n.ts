@@ -5,7 +5,7 @@ export const SUPPORTED_LANGUAGES: { code: Language; label: string; nativeLabel: 
   { code: 'ne', label: 'नेपाली', nativeLabel: 'नेपाली' },
 ];
 
-const translations = {
+export const translations = {
   en: {
     // Navbar
     nav_home: 'Home',

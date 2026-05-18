@@ -16,6 +16,10 @@ const nextConfig = {
   images: {
     remotePatterns: imageHosts,
     minimumCacheTTL: 60,
-  }
+  },
+  // Allow the development server to be accessed through the preview proxy
+  experimental: {
+    allowedHosts: ['all'],
+  },
 };
 export default nextConfig;
