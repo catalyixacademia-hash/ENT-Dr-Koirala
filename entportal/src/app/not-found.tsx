@@ -1,19 +1,28 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Icon from '@/components/ui/AppIcon';
+import { type Language, getTranslations } from '@/lib/i18n';
 
 export default function NotFound() {
   const router = useRouter();
+  const [language, setLanguage] = useState<Language>('en');
+
+  useEffect(() => {
+    const stored = window.localStorage.getItem('entportal-lang');
+    if (stored === 'ne' || stored === 'en') setLanguage(stored);
+  }, []);
+
+  const t = getTranslations(language);
 
   const handleGoHome = () => {
-    router?.push('/');
+    router.push('/');
   };
 
   const handleGoBack = () => {
     if (typeof window !== 'undefined') {
-      window.history?.back();
+      window.history.back();
     }
   };
 
@@ -26,10 +35,8 @@ export default function NotFound() {
           </div>
         </div>
 
-        <h2 className="text-2xl font-medium text-onBackground mb-2">Page Not Found</h2>
-        <p className="text-onBackground/70 mb-8">
-          The page you&apos;re looking for doesn&apos;t exist. Let&apos;s get you back!
-        </p>
+        <h2 className="text-2xl font-medium text-onBackground mb-2">{t.not_found_title}</h2>
+        <p className="text-onBackground/70 mb-8">{t.not_found_desc}</p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
@@ -37,7 +44,7 @@ export default function NotFound() {
             className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium hover:bg-primary/90 transition-colors duration-200"
           >
             <Icon name="ArrowLeftIcon" size={16} />
-            Go Back
+            {t.not_found_go_back}
           </button>
 
           <button
@@ -45,7 +52,7 @@ export default function NotFound() {
             className="inline-flex items-center justify-center gap-2 border border-border bg-background text-foreground px-6 py-3 rounded-lg font-medium hover:bg-accent hover:text-accent-foreground transition-colors duration-200"
           >
             <Icon name="HomeIcon" size={16} />
-            Back to Home
+            {t.not_found_back_home}
           </button>
         </div>
       </div>

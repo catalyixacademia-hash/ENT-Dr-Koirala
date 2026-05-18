@@ -1,16 +1,8 @@
 'use client';
 import React from 'react';
-import {
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  BarChart,
-  Bar,
-} from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import type { Language } from '@/lib/i18n';
+import { serviceLabel } from '@/lib/i18n-helpers';
 
 const TREND_DATA = [
   { week: 'Mar W1', appointments: 22, newPatients: 6 },
@@ -67,12 +59,26 @@ const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
 interface AppointmentTrendChartClientProps {
   chartTitle?: string;
   chartSubtitle?: string;
+  legendAppointments?: string;
+  legendNewPatients?: string;
+  serviceChartTitle?: string;
+  countLabel?: string;
+  language?: Language;
 }
 
 export default function AppointmentTrendChartClient({
   chartTitle = 'Appointment Trends',
   chartSubtitle = 'Weekly volume — last 12 weeks',
+  legendAppointments = 'Appointments',
+  legendNewPatients = 'New Patients',
+  serviceChartTitle = 'Appointments by Service Type (May)',
+  countLabel = 'Count',
+  language = 'en',
 }: AppointmentTrendChartClientProps) {
+  const serviceData = SERVICE_DATA.map((row) => ({
+    ...row,
+    service: serviceLabel(language, row.service),
+  }));
   return (
     <div className="bg-white rounded-2xl border card-shadow p-6">
       <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
@@ -83,11 +89,11 @@ export default function AppointmentTrendChartClient({
         <div className="flex items-center gap-4 text-xs">
           <span className="flex items-center gap-1.5 text-muted-foreground font-medium">
             <span className="w-3 h-3 rounded-sm" style={{ background: 'var(--primary)' }} />
-            Appointments
+            {legendAppointments}
           </span>
           <span className="flex items-center gap-1.5 text-muted-foreground font-medium">
             <span className="w-3 h-3 rounded-sm" style={{ background: 'var(--secondary)' }} />
-            New Patients
+            {legendNewPatients}
           </span>
         </div>
       </div>
@@ -106,58 +112,24 @@ export default function AppointmentTrendChartClient({
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" />
-            <XAxis
-              dataKey="week"
-              tick={{ fontSize: 10, fill: 'var(--muted-foreground)' }}
-              tickLine={false}
-            />
-            <YAxis
-              tick={{ fontSize: 10, fill: 'var(--muted-foreground)' }}
-              tickLine={false}
-              axisLine={false}
-            />
+            <XAxis dataKey="week" tick={{ fontSize: 10, fill: 'var(--muted-foreground)' }} tickLine={false} />
+            <YAxis tick={{ fontSize: 10, fill: 'var(--muted-foreground)' }} tickLine={false} axisLine={false} />
             <Tooltip content={<CustomTooltip />} />
-            <Area
-              type="monotone"
-              dataKey="appointments"
-              name="Appointments"
-              stroke="var(--primary)"
-              strokeWidth={2}
-              fill="url(#colorAppt)"
-              dot={false}
-            />
-            <Area
-              type="monotone"
-              dataKey="newPatients"
-              name="New Patients"
-              stroke="var(--secondary)"
-              strokeWidth={2}
-              fill="url(#colorNew)"
-              dot={false}
-            />
+            <Area type="monotone" dataKey="appointments" name={legendAppointments} stroke="var(--primary)" strokeWidth={2} fill="url(#colorAppt)" dot={false} />
+            <Area type="monotone" dataKey="newPatients" name={legendNewPatients} stroke="var(--secondary)" strokeWidth={2} fill="url(#colorNew)" dot={false} />
           </AreaChart>
         </ResponsiveContainer>
       </div>
 
       <div className="border-t pt-5">
-        <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-4">
-          Appointments by Service Type (May)
-        </p>
+        <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-4">{serviceChartTitle}</p>
         <ResponsiveContainer width="100%" height={120}>
-          <BarChart data={SERVICE_DATA} margin={{ top: 0, right: 4, bottom: 0, left: -20 }}>
+          <BarChart data={serviceData} margin={{ top: 0, right: 4, bottom: 0, left: -20 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--border)" vertical={false} />
-            <XAxis
-              dataKey="service"
-              tick={{ fontSize: 10, fill: 'var(--muted-foreground)' }}
-              tickLine={false}
-            />
-            <YAxis
-              tick={{ fontSize: 10, fill: 'var(--muted-foreground)' }}
-              tickLine={false}
-              axisLine={false}
-            />
+            <XAxis dataKey="service" tick={{ fontSize: 10, fill: 'var(--muted-foreground)' }} tickLine={false} />
+            <YAxis tick={{ fontSize: 10, fill: 'var(--muted-foreground)' }} tickLine={false} axisLine={false} />
             <Tooltip content={<CustomTooltip />} />
-            <Bar dataKey="count" name="Count" fill="var(--accent)" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="count" name={countLabel} fill="var(--accent)" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>

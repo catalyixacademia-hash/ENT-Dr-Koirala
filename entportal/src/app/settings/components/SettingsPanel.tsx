@@ -15,31 +15,11 @@ export default function SettingsPanel() {
   const t = getTranslations(language);
 
   const SETTINGS_NAV = [
-    {
-      id: 'sn-profile',
-      label: t.admin_settings_profile,
-      icon: 'UserCircleIcon',
-      component: 'profile',
-    },
+    { id: 'sn-profile', label: t.admin_settings_profile, icon: 'UserCircleIcon', component: 'profile' },
     { id: 'sn-hours', label: t.admin_settings_hours, icon: 'ClockIcon', component: 'hours' },
-    {
-      id: 'sn-availability',
-      label: t.admin_settings_availability,
-      icon: 'CalendarDaysIcon',
-      component: 'availability',
-    },
-    {
-      id: 'sn-notifications',
-      label: t.admin_settings_notifications,
-      icon: 'BellIcon',
-      component: 'notifications',
-    },
-    {
-      id: 'sn-security',
-      label: t.admin_settings_security,
-      icon: 'ShieldCheckIcon',
-      component: 'security',
-    },
+    { id: 'sn-availability', label: t.admin_settings_availability, icon: 'CalendarDaysIcon', component: 'availability' },
+    { id: 'sn-notifications', label: t.admin_settings_notifications, icon: 'BellIcon', component: 'notifications' },
+    { id: 'sn-security', label: t.admin_settings_security, icon: 'ShieldCheckIcon', component: 'security' },
   ];
 
   return (
@@ -59,8 +39,7 @@ export default function SettingsPanel() {
                 onClick={() => setActive(item.component)}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${
                   active === item.component
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                    ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                 }`}
               >
                 <Icon name={item.icon as Parameters<typeof Icon>[0]['name']} size={16} />

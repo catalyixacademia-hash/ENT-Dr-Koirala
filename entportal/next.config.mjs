@@ -17,9 +17,10 @@ const nextConfig = {
     remotePatterns: imageHosts,
     minimumCacheTTL: 60,
   },
-  // Allow the development server to be accessed through the preview proxy
   experimental: {
-    allowedHosts: ['all'],
+    serverActions: {
+      allowedOrigins: ['*.app-jules.com', 'localhost:3000'],
+    },
   },
 };
 export default nextConfig;

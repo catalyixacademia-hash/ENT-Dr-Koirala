@@ -18,25 +18,9 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
-  {
-    id: 'nav-dashboard',
-    labelKey: 'admin_nav_dashboard',
-    icon: 'HomeIcon',
-    href: '/admin-dashboard-home',
-  },
-  {
-    id: 'nav-appointments',
-    labelKey: 'admin_nav_appointments',
-    icon: 'CalendarDaysIcon',
-    href: '/appointments-management',
-    badge: 4,
-  },
-  {
-    id: 'nav-patients',
-    labelKey: 'admin_nav_patients',
-    icon: 'UserGroupIcon',
-    href: '/patient-records-crm',
-  },
+  { id: 'nav-dashboard', labelKey: 'admin_nav_dashboard', icon: 'HomeIcon', href: '/admin-dashboard-home' },
+  { id: 'nav-appointments', labelKey: 'admin_nav_appointments', icon: 'CalendarDaysIcon', href: '/appointments-management', badge: 4 },
+  { id: 'nav-patients', labelKey: 'admin_nav_patients', icon: 'UserGroupIcon', href: '/patient-records-crm' },
   { id: 'nav-settings', labelKey: 'admin_nav_settings', icon: 'Cog6ToothIcon', href: '/settings' },
 ];
 
@@ -81,7 +65,7 @@ export default function AdminSidebar({ currentPath, onClose }: AdminSidebarProps
         {!collapsed && (
           <div className="flex items-center gap-2">
             <AppLogo size={32} />
-            <span className="font-bold text-white text-sm tracking-tight">ENTPortal</span>
+            <span className="font-bold text-white text-sm tracking-tight">{t.brand_name}</span>
           </div>
         )}
         {collapsed && (
@@ -94,7 +78,7 @@ export default function AdminSidebar({ currentPath, onClose }: AdminSidebarProps
             <button
               onClick={() => setCollapsed(true)}
               className="p-1.5 rounded-lg hover:bg-white/10 transition-colors hidden lg:flex"
-              aria-label="Collapse sidebar"
+              aria-label={t.admin_sidebar_collapse}
             >
               <Icon name="ChevronLeftIcon" size={16} className="text-slate-400" />
             </button>
@@ -104,7 +88,7 @@ export default function AdminSidebar({ currentPath, onClose }: AdminSidebarProps
             <button
               onClick={onClose}
               className="p-1.5 rounded-lg hover:bg-white/10 transition-colors lg:hidden"
-              aria-label="Close sidebar"
+              aria-label={t.admin_sidebar_close}
             >
               <Icon name="XMarkIcon" size={16} className="text-slate-400" />
             </button>
@@ -116,7 +100,7 @@ export default function AdminSidebar({ currentPath, onClose }: AdminSidebarProps
         <button
           onClick={() => setCollapsed(false)}
           className="mx-auto mt-2 p-1.5 rounded-lg hover:bg-white/10 transition-colors hidden lg:flex"
-          aria-label="Expand sidebar"
+          aria-label={t.admin_sidebar_expand}
         >
           <Icon name="ChevronRightIcon" size={16} className="text-slate-400" />
         </button>
@@ -130,8 +114,7 @@ export default function AdminSidebar({ currentPath, onClose }: AdminSidebarProps
           </p>
         )}
         {NAV_ITEMS.map((item) => {
-          const isActive =
-            currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
+          const isActive = currentPath === item.href || (item.href !== '/' && currentPath.startsWith(item.href));
           const label = t[item.labelKey as keyof typeof t] as string;
           return (
             <Link
@@ -146,13 +129,8 @@ export default function AdminSidebar({ currentPath, onClose }: AdminSidebarProps
                 <>
                   <span className="flex-1">{label}</span>
                   {item.badge !== undefined && (
-                    <span
-                      className="ml-auto inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold"
-                      style={{
-                        backgroundColor: 'rgba(20,184,166,0.2)',
-                        color: 'var(--sidebar-active)',
-                      }}
-                    >
+                    <span className="ml-auto inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold"
+                      style={{ backgroundColor: 'rgba(20,184,166,0.2)', color: 'var(--sidebar-active)' }}>
                       {item.badge}
                     </span>
                   )}
@@ -188,9 +166,7 @@ export default function AdminSidebar({ currentPath, onClose }: AdminSidebarProps
 
       {/* User Footer */}
       <div className="px-2 py-3 border-t border-white/10">
-        <div
-          className={`flex items-center gap-3 px-3 py-2 rounded-lg ${collapsed ? 'justify-center' : ''}`}
-        >
+        <div className={`flex items-center gap-3 px-3 py-2 rounded-lg ${collapsed ? 'justify-center' : ''}`}>
           <div className="w-8 h-8 rounded-full gradient-primary flex items-center justify-center flex-shrink-0">
             <span className="text-white text-xs font-bold">KK</span>
           </div>
@@ -206,8 +182,8 @@ export default function AdminSidebar({ currentPath, onClose }: AdminSidebarProps
               onClick={handleSignOut}
               disabled={signingOut}
               className="p-2 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
-              title="Sign out"
-              aria-label="Sign out"
+              title={t.admin_sign_out}
+              aria-label={t.admin_sign_out}
             >
               <Icon name="ArrowRightOnRectangleIcon" size={18} />
             </button>

@@ -1,6 +1,8 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Icon from '@/components/ui/AppIcon';
+import { useAdminLanguage } from '@/contexts/AdminLanguageContext';
+import { getTranslations } from '@/lib/i18n';
 
 interface NotifToggle {
   id: string;
@@ -10,68 +12,91 @@ interface NotifToggle {
   channel: 'email' | 'sms' | 'both';
 }
 
-const DEFAULT_NOTIFS: NotifToggle[] = [
-  {
-    id: 'notif-new-booking',
-    label: 'New Booking Alert',
-    description: 'Get notified instantly when a patient submits a new appointment request',
-    enabled: true,
-    channel: 'both',
-  },
-  {
-    id: 'notif-confirm',
-    label: 'Appointment Confirmed',
-    description: 'Receive confirmation when an appointment is confirmed in the system',
-    enabled: true,
-    channel: 'email',
-  },
-  {
-    id: 'notif-cancel',
-    label: 'Appointment Cancelled',
-    description: 'Alert when a patient cancels their appointment',
-    enabled: true,
-    channel: 'both',
-  },
-  {
-    id: 'notif-reminder',
-    label: 'Daily Schedule Reminder',
-    description: "Morning summary of today's appointments at 8:00 AM",
-    enabled: true,
-    channel: 'email',
-  },
-  {
-    id: 'notif-patient-new',
-    label: 'New Patient Registration',
-    description: 'Notification when a new patient record is created',
-    enabled: false,
-    channel: 'email',
-  },
-  {
-    id: 'notif-review',
-    label: 'New Patient Review',
-    description: 'Alert when a patient leaves a review on Google or social media',
-    enabled: true,
-    channel: 'email',
-  },
-  {
-    id: 'notif-weekly',
-    label: 'Weekly Analytics Report',
-    description: 'Weekly summary of bookings, new patients, and website traffic',
-    enabled: true,
-    channel: 'email',
-  },
-];
+const NOTIF_DEFAULTS: Record<string, { enabled: boolean; channel: 'email' | 'sms' | 'both' }> = {
+  'notif-new-booking': { enabled: true, channel: 'both' },
+  'notif-confirm': { enabled: true, channel: 'email' },
+  'notif-cancel': { enabled: true, channel: 'both' },
+  'notif-reminder': { enabled: true, channel: 'email' },
+  'notif-patient-new': { enabled: false, channel: 'email' },
+  'notif-review': { enabled: true, channel: 'email' },
+  'notif-weekly': { enabled: true, channel: 'email' },
+};
 
 export default function NotificationSettings() {
-  const [notifs, setNotifs] = useState<NotifToggle[]>(DEFAULT_NOTIFS);
+  const { language } = useAdminLanguage();
+  const t = getTranslations(language);
+  const [prefs, setPrefs] = useState(NOTIF_DEFAULTS);
   const [saved, setSaved] = useState(false);
 
+  const notifs = useMemo<NotifToggle[]>(
+    () => [
+      {
+        id: 'notif-new-booking',
+        label: t.settings_notif_new_booking,
+        description: t.settings_notif_new_booking_desc,
+        enabled: prefs['notif-new-booking'].enabled,
+        channel: prefs['notif-new-booking'].channel,
+      },
+      {
+        id: 'notif-confirm',
+        label: t.settings_notif_confirm,
+        description: t.settings_notif_confirm_desc,
+        enabled: prefs['notif-confirm'].enabled,
+        channel: prefs['notif-confirm'].channel,
+      },
+      {
+        id: 'notif-cancel',
+        label: t.settings_notif_cancel,
+        description: t.settings_notif_cancel_desc,
+        enabled: prefs['notif-cancel'].enabled,
+        channel: prefs['notif-cancel'].channel,
+      },
+      {
+        id: 'notif-reminder',
+        label: t.settings_notif_reminder,
+        description: t.settings_notif_reminder_desc,
+        enabled: prefs['notif-reminder'].enabled,
+        channel: prefs['notif-reminder'].channel,
+      },
+      {
+        id: 'notif-patient-new',
+        label: t.settings_notif_patient_new,
+        description: t.settings_notif_patient_new_desc,
+        enabled: prefs['notif-patient-new'].enabled,
+        channel: prefs['notif-patient-new'].channel,
+      },
+      {
+        id: 'notif-review',
+        label: t.settings_notif_review,
+        description: t.settings_notif_review_desc,
+        enabled: prefs['notif-review'].enabled,
+        channel: prefs['notif-review'].channel,
+      },
+      {
+        id: 'notif-weekly',
+        label: t.settings_notif_weekly,
+        description: t.settings_notif_weekly_desc,
+        enabled: prefs['notif-weekly'].enabled,
+        channel: prefs['notif-weekly'].channel,
+      },
+    ],
+    [t, prefs]
+  );
+
+  const channelLabel = (channel: 'email' | 'sms' | 'both') => {
+    if (channel === 'both') return t.settings_channel_both;
+    if (channel === 'email') return t.settings_channel_email;
+    return t.settings_channel_sms;
+  };
+
   const toggle = (id: string) => {
-    setNotifs((prev) => prev.map((n) => (n.id === id ? { ...n, enabled: !n.enabled } : n)));
+    setPrefs((prev) => ({
+      ...prev,
+      [id]: { ...prev[id], enabled: !prev[id].enabled },
+    }));
   };
 
   const handleSave = async () => {
-    // BACKEND INTEGRATION: PUT /api/settings/notifications with notif preferences
     await new Promise((r) => setTimeout(r, 700));
     setSaved(true);
     setTimeout(() => setSaved(false), 3000);
@@ -82,11 +107,9 @@ export default function NotificationSettings() {
       <div className="bg-white rounded-2xl border card-shadow p-6">
         <h2 className="text-base font-bold text-foreground mb-2 flex items-center gap-2">
           <Icon name="BellIcon" size={18} className="text-primary" />
-          Notification Preferences
+          {t.settings_notif_title}
         </h2>
-        <p className="text-xs text-muted-foreground mb-6">
-          Choose how and when you receive alerts about your practice
-        </p>
+        <p className="text-xs text-muted-foreground mb-6">{t.settings_notif_desc}</p>
 
         <div className="space-y-3">
           {notifs.map((notif) => (
@@ -106,11 +129,7 @@ export default function NotificationSettings() {
                           : 'bg-green-50 text-green-600'
                     }`}
                   >
-                    {notif.channel === 'both'
-                      ? 'Email + SMS'
-                      : notif.channel === 'email'
-                        ? 'Email'
-                        : 'SMS'}
+                    {channelLabel(notif.channel)}
                   </span>
                 </div>
                 <p className="text-xs text-muted-foreground">{notif.description}</p>
@@ -118,7 +137,7 @@ export default function NotificationSettings() {
               <button
                 onClick={() => toggle(notif.id)}
                 className={`relative w-11 h-6 rounded-full transition-all flex-shrink-0 ${notif.enabled ? 'bg-secondary' : 'bg-muted-foreground/30'}`}
-                aria-label={notif.enabled ? 'Disable notification' : 'Enable notification'}
+                aria-label={notif.enabled ? t.settings_disable_notif : t.settings_enable_notif}
               >
                 <span
                   className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-all ${notif.enabled ? 'left-6' : 'left-1'}`}
@@ -129,16 +148,15 @@ export default function NotificationSettings() {
         </div>
       </div>
 
-      {/* Contact Details for Notifications */}
       <div className="bg-white rounded-2xl border card-shadow p-6">
-        <h3 className="text-sm font-bold text-foreground mb-4">Notification Contact Details</h3>
+        <h3 className="text-sm font-bold text-foreground mb-4">{t.settings_notif_contact}</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="label-text">Notification Email</label>
+            <label className="label-text">{t.settings_notif_email}</label>
             <input type="email" defaultValue="dr.mehta@entportal.in" className="input-field" />
           </div>
           <div>
-            <label className="label-text">SMS Number</label>
+            <label className="label-text">{t.settings_sms_number}</label>
             <input type="tel" defaultValue="+91 98765 43210" className="input-field" />
           </div>
         </div>
@@ -148,12 +166,12 @@ export default function NotificationSettings() {
         {saved && (
           <span className="flex items-center gap-1.5 text-sm text-secondary font-semibold">
             <Icon name="CheckCircleIcon" size={16} />
-            Notification preferences saved
+            {t.settings_notif_saved}
           </span>
         )}
         <button onClick={handleSave} className="btn-primary text-sm px-5 py-2.5">
           <Icon name="CheckIcon" size={15} />
-          Save Preferences
+          {t.settings_save_prefs}
         </button>
       </div>
     </div>

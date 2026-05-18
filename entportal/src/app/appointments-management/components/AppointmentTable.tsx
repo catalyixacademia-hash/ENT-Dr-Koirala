@@ -4,6 +4,7 @@ import Icon from '@/components/ui/AppIcon';
 import type { Appointment, AppointmentStatus } from './AppointmentsManager';
 import { useAdminLanguage } from '@/contexts/AdminLanguageContext';
 import { getTranslations } from '@/lib/i18n';
+import { statusLabel, serviceLabel } from '@/lib/i18n-helpers';
 
 interface Props {
   appointments: Appointment[];
@@ -17,26 +18,16 @@ const STATUS_OPTIONS: AppointmentStatus[] = ['pending', 'confirmed', 'completed'
 
 const statusBadgeClass = (status: AppointmentStatus) => {
   switch (status) {
-    case 'pending':
-      return 'status-pending';
-    case 'confirmed':
-      return 'status-confirmed';
-    case 'completed':
-      return 'status-completed';
-    case 'cancelled':
-      return 'status-cancelled';
+    case 'pending': return 'status-pending';
+    case 'confirmed': return 'status-confirmed';
+    case 'completed': return 'status-completed';
+    case 'cancelled': return 'status-cancelled';
   }
 };
 
 const ITEMS_PER_PAGE_OPTIONS = [10, 25, 50];
 
-export default function AppointmentTable({
-  appointments,
-  selectedIds,
-  onSelectIds,
-  onUpdateStatus,
-  onViewDetail,
-}: Props) {
+export default function AppointmentTable({ appointments, selectedIds, onSelectIds, onUpdateStatus, onViewDetail }: Props) {
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const [sortKey, setSortKey] = useState<keyof Appointment>('date');
@@ -56,10 +47,7 @@ export default function AppointmentTable({
 
   const toggleSort = (key: keyof Appointment) => {
     if (sortKey === key) setSortDir((d) => (d === 'asc' ? 'desc' : 'asc'));
-    else {
-      setSortKey(key);
-      setSortDir('asc');
-    }
+    else { setSortKey(key); setSortDir('asc'); }
   };
 
   const toggleAll = () => {
@@ -68,9 +56,7 @@ export default function AppointmentTable({
   };
 
   const toggleOne = (id: string) => {
-    onSelectIds(
-      selectedIds.includes(id) ? selectedIds.filter((x) => x !== id) : [...selectedIds, id]
-    );
+    onSelectIds(selectedIds.includes(id) ? selectedIds.filter((x) => x !== id) : [...selectedIds, id]);
   };
 
   const SortIcon = ({ col }: { col: keyof Appointment }) => (
@@ -78,16 +64,12 @@ export default function AppointmentTable({
       <Icon
         name="ChevronUpIcon"
         size={10}
-        className={
-          sortKey === col && sortDir === 'asc' ? 'text-primary' : 'text-muted-foreground/40'
-        }
+        className={sortKey === col && sortDir === 'asc' ? 'text-primary' : 'text-muted-foreground/40'}
       />
       <Icon
         name="ChevronDownIcon"
         size={10}
-        className={
-          sortKey === col && sortDir === 'desc' ? 'text-primary' : 'text-muted-foreground/40'
-        }
+        className={sortKey === col && sortDir === 'desc' ? 'text-primary' : 'text-muted-foreground/40'}
       />
     </span>
   );
@@ -137,16 +119,17 @@ export default function AppointmentTable({
                     <div className="w-12 h-12 rounded-2xl bg-muted flex items-center justify-center">
                       <Icon name="CalendarDaysIcon" size={24} className="text-muted-foreground" />
                     </div>
-                    <p className="text-sm font-semibold text-foreground">
-                      {t.admin_no_appointments}
-                    </p>
+                    <p className="text-sm font-semibold text-foreground">{t.admin_no_appointments}</p>
                     <p className="text-xs text-muted-foreground">{t.admin_no_appointments_sub}</p>
                   </div>
                 </td>
               </tr>
             ) : (
               paginated.map((appt) => (
-                <tr key={appt.id} className="hover:bg-muted/30 transition-colors group">
+                <tr
+                  key={appt.id}
+                  className="hover:bg-muted/30 transition-colors group"
+                >
                   <td className="px-4 py-3">
                     <input
                       type="checkbox"
@@ -159,23 +142,15 @@ export default function AppointmentTable({
                     <div className="flex items-center gap-2">
                       <div className="w-8 h-8 rounded-full gradient-primary flex items-center justify-center flex-shrink-0">
                         <span className="text-white text-xs font-bold">
-                          {appt.patientName
-                            .split(' ')
-                            .map((n) => n[0])
-                            .join('')
-                            .slice(0, 2)}
+                          {appt.patientName.split(' ').map((n) => n[0]).join('').slice(0, 2)}
                         </span>
                       </div>
                       <div>
-                        <p className="font-semibold text-foreground whitespace-nowrap">
-                          {appt.patientName}
-                        </p>
+                        <p className="font-semibold text-foreground whitespace-nowrap">{appt.patientName}</p>
                         <p className="text-xs text-muted-foreground">{appt.phone}</p>
                       </div>
                       {appt.isNew && (
-                        <span className="px-1.5 py-0.5 rounded-full text-xs font-bold bg-accent/10 text-accent">
-                          NEW
-                        </span>
+                        <span className="px-1.5 py-0.5 rounded-full text-xs font-bold bg-accent/10 text-accent">{t.admin_badge_new}</span>
                       )}
                     </div>
                   </td>
@@ -187,7 +162,7 @@ export default function AppointmentTable({
                   </td>
                   <td className="px-4 py-3">
                     <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-muted text-muted-foreground whitespace-nowrap">
-                      {appt.serviceType}
+                      {serviceLabel(language, appt.serviceType)}
                     </span>
                   </td>
                   <td className="px-4 py-3 text-sm text-muted-foreground max-w-xs">
@@ -199,12 +174,10 @@ export default function AppointmentTable({
                   <td className="px-4 py-3 relative">
                     <div className="relative">
                       <button
-                        onClick={() =>
-                          setStatusDropdown(statusDropdown === appt.id ? null : appt.id)
-                        }
+                        onClick={() => setStatusDropdown(statusDropdown === appt.id ? null : appt.id)}
                         className={`status-badge ${statusBadgeClass(appt.status)} cursor-pointer hover:opacity-80 transition-opacity`}
                       >
-                        {appt.status}
+                        {statusLabel(language, appt.status)}
                         <Icon name="ChevronDownIcon" size={10} />
                       </button>
                       {statusDropdown === appt.id && (
@@ -212,13 +185,10 @@ export default function AppointmentTable({
                           {STATUS_OPTIONS.map((s) => (
                             <button
                               key={`status-opt-${s}`}
-                              onClick={() => {
-                                onUpdateStatus(appt.id, s);
-                                setStatusDropdown(null);
-                              }}
+                              onClick={() => { onUpdateStatus(appt.id, s); setStatusDropdown(null); }}
                               className={`w-full text-left px-3 py-2 text-xs font-semibold hover:bg-muted transition-colors ${appt.status === s ? 'text-primary' : 'text-foreground'}`}
                             >
-                              {s.charAt(0).toUpperCase() + s.slice(1)}
+                              {statusLabel(language, s)}
                             </button>
                           ))}
                         </div>
@@ -229,19 +199,22 @@ export default function AppointmentTable({
                     <div className="flex items-center justify-end gap-1">
                       <button
                         onClick={() => onViewDetail(appt)}
-                        title="View appointment details"
+                        title={t.admin_action_view_aria}
+                        aria-label={t.admin_action_view_aria}
                         className="p-1.5 rounded-lg hover:bg-muted transition-colors"
                       >
                         <Icon name="EyeIcon" size={15} className="text-muted-foreground" />
                       </button>
                       <button
-                        title="Edit appointment"
+                        title={t.admin_action_edit_aria}
+                        aria-label={t.admin_action_edit_aria}
                         className="p-1.5 rounded-lg hover:bg-muted transition-colors"
                       >
                         <Icon name="PencilSquareIcon" size={15} className="text-muted-foreground" />
                       </button>
                       <button
-                        title="Cancel appointment"
+                        title={t.admin_action_cancel_aria}
+                        aria-label={t.admin_action_cancel_aria}
                         onClick={() => onUpdateStatus(appt.id, 'cancelled')}
                         className="p-1.5 rounded-lg hover:bg-red-50 transition-colors"
                       >
@@ -263,21 +236,15 @@ export default function AppointmentTable({
             <span className="text-xs text-muted-foreground">{t.admin_rows_per_page}</span>
             <select
               value={perPage}
-              onChange={(e) => {
-                setPerPage(Number(e.target.value));
-                setPage(1);
-              }}
+              onChange={(e) => { setPerPage(Number(e.target.value)); setPage(1); }}
               className="text-xs border rounded-lg px-2 py-1 bg-white outline-none"
             >
               {ITEMS_PER_PAGE_OPTIONS.map((n) => (
-                <option key={`pp-${n}`} value={n}>
-                  {n}
-                </option>
+                <option key={`pp-${n}`} value={n}>{n}</option>
               ))}
             </select>
             <span className="text-xs text-muted-foreground">
-              {(page - 1) * perPage + 1}–{Math.min(page * perPage, sorted.length)} {t.admin_of}{' '}
-              {sorted.length}
+              {(page - 1) * perPage + 1}–{Math.min(page * perPage, sorted.length)} {t.admin_of} {sorted.length}
             </span>
           </div>
           <div className="flex items-center gap-1">
@@ -305,9 +272,7 @@ export default function AppointmentTable({
                   <button
                     onClick={() => setPage(p)}
                     className={`w-7 h-7 rounded-lg text-xs font-semibold transition-colors ${
-                      page === p
-                        ? 'gradient-primary text-white'
-                        : 'hover:bg-muted text-muted-foreground'
+                      page === p ? 'gradient-primary text-white' : 'hover:bg-muted text-muted-foreground'
                     }`}
                   >
                     {p}

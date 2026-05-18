@@ -26,24 +26,16 @@ export default function PublicFooter({ language }: PublicFooterProps) {
             <div className="flex items-center gap-2 mb-4">
               <AppLogo size={36} />
               <div>
-                <p className="font-bold text-white text-sm">Dr. Krishna Koirala</p>
-                <p className="text-xs text-slate-400">ENT & Head-Neck Surgeon</p>
+                <p className="font-bold text-white text-sm">{t.footer_doctor_name}</p>
+                <p className="text-xs text-slate-400">{t.footer_doctor_title}</p>
               </div>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed mb-4">{t.footer_tagline}</p>
             <div className="flex gap-3">
               {[
-                {
-                  icon: 'GlobeAltIcon',
-                  href: 'https://www.facebook.com/drkrishnakoirala',
-                  label: 'Facebook',
-                },
-                {
-                  icon: 'PlayCircleIcon',
-                  href: 'https://www.tiktok.com/@dr_krishna_koirala_ent',
-                  label: 'TikTok',
-                },
-                { icon: 'PhoneIcon', href: 'tel:061553150', label: 'Phone' },
+                { icon: 'GlobeAltIcon', href: 'https://www.facebook.com/drkrishnakoirala', label: t.footer_aria_facebook },
+                { icon: 'PlayCircleIcon', href: 'https://www.tiktok.com/@dr_krishna_koirala_ent', label: t.footer_aria_tiktok },
+                { icon: 'PhoneIcon', href: 'tel:061553150', label: t.footer_aria_phone },
               ].map((s) => (
                 <a
                   key={s.label}
@@ -53,11 +45,7 @@ export default function PublicFooter({ language }: PublicFooterProps) {
                   aria-label={s.label}
                   className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
                 >
-                  <Icon
-                    name={s.icon as Parameters<typeof Icon>[0]['name']}
-                    size={16}
-                    className="text-slate-300"
-                  />
+                  <Icon name={s.icon as Parameters<typeof Icon>[0]['name']} size={16} className="text-slate-300" />
                 </a>
               ))}
             </div>
@@ -65,16 +53,11 @@ export default function PublicFooter({ language }: PublicFooterProps) {
 
           {/* Quick Links */}
           <div>
-            <p className="font-bold text-white text-sm mb-4 uppercase tracking-wider">
-              {t.footer_quick}
-            </p>
+            <p className="font-bold text-white text-sm mb-4 uppercase tracking-wider">{t.footer_quick}</p>
             <ul className="space-y-2.5">
               {quickLinks.map((link) => (
                 <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className="text-slate-400 hover:text-white text-sm transition-colors"
-                  >
+                  <a href={link.href} className="text-slate-400 hover:text-white text-sm transition-colors">
                     {link.label}
                   </a>
                 </li>
@@ -84,21 +67,15 @@ export default function PublicFooter({ language }: PublicFooterProps) {
 
           {/* Contact */}
           <div>
-            <p className="font-bold text-white text-sm mb-4 uppercase tracking-wider">
-              {t.footer_contact}
-            </p>
+            <p className="font-bold text-white text-sm mb-4 uppercase tracking-wider">{t.footer_contact}</p>
             <div className="space-y-3">
               {[
-                { icon: 'PhoneIcon', text: '061-553150 | 985-6034347' },
-                { icon: 'MapPinIcon', text: 'Nayabazar ENT Care Center, Pokhara, Nepal' },
-                { icon: 'ClockIcon', text: 'Mon–Sat: 9AM–1PM & 5PM–8PM' },
+                { icon: 'PhoneIcon', text: t.footer_phone },
+                { icon: 'MapPinIcon', text: t.footer_address },
+                { icon: 'ClockIcon', text: t.footer_hours },
               ].map((item, i) => (
                 <div key={`contact-${i}`} className="flex items-start gap-2.5">
-                  <Icon
-                    name={item.icon as Parameters<typeof Icon>[0]['name']}
-                    size={14}
-                    className="text-slate-400 flex-shrink-0 mt-0.5"
-                  />
+                  <Icon name={item.icon as Parameters<typeof Icon>[0]['name']} size={14} className="text-slate-400 flex-shrink-0 mt-0.5" />
                   <span className="text-slate-400 text-sm">{item.text}</span>
                 </div>
               ))}
@@ -108,9 +85,7 @@ export default function PublicFooter({ language }: PublicFooterProps) {
 
         <div className="border-t border-white/10 pt-6 sm:pt-8 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-slate-500 text-xs text-center sm:text-left">{t.footer_rights}</p>
-          <p className="text-slate-600 text-xs text-center sm:text-right max-w-sm">
-            {t.footer_disclaimer}
-          </p>
+          <p className="text-slate-600 text-xs text-center sm:text-right max-w-sm">{t.footer_disclaimer}</p>
         </div>
       </div>
     </footer>

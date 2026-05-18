@@ -1,24 +1,31 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const ADMIN_EMAIL = 'drkrishnakoirala@gmail.com';
 const FROM_EMAIL = 'onboarding@resend.dev';
 const CLINIC_NAME = 'Dr. Krishna Koirala ENT Care';
 
+function getResendClient(): Resend | null {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) return null;
+  return new Resend(apiKey);
+}
+
 export async function POST(req: NextRequest) {
   try {
+    const resend = getResendClient();
+    if (!resend) {
+      return NextResponse.json(
+        { error: 'Email service is not configured' },
+        { status: 503 },
+      );
+    }
+
     const body = await req.json();
     const { fullName, phone, email, preferredDate, preferredTime, reason, message } = body;
 
     const formattedDate = preferredDate
-      ? new Date(preferredDate).toLocaleDateString('en-US', {
-          weekday: 'long',
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-        })
+      ? new Date(preferredDate).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
       : preferredDate;
 
     // Patient confirmation email

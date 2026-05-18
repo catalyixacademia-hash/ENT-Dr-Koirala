@@ -25,11 +25,11 @@ export async function updateSession(request: NextRequest) {
           cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
           supabaseResponse = NextResponse.next({ request });
           cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
+            supabaseResponse.cookies.set(name, value, options),
           );
         },
       },
-    }
+    },
   );
 
   const {
@@ -38,10 +38,10 @@ export async function updateSession(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname;
   const isAdminRoute = ADMIN_PATHS.some(
-    (path) => pathname === path || pathname.startsWith(`${path}/`)
+    (path) => pathname === path || pathname.startsWith(`${path}/`),
   );
   const isAuthRoute = AUTH_PATHS.some(
-    (path) => pathname === path || pathname.startsWith(`${path}/`)
+    (path) => pathname === path || pathname.startsWith(`${path}/`),
   );
 
   if (isAdminRoute && !user) {
@@ -52,7 +52,8 @@ export async function updateSession(request: NextRequest) {
   }
 
   if (isAuthRoute && user) {
-    const redirectTo = request.nextUrl.searchParams.get('redirect') || '/admin-dashboard-home';
+    const redirectTo =
+      request.nextUrl.searchParams.get('redirect') || '/admin-dashboard-home';
     const dashboardUrl = request.nextUrl.clone();
     dashboardUrl.pathname = redirectTo;
     dashboardUrl.search = '';
